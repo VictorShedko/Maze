@@ -21,15 +21,15 @@
 Сокет для связи с сервером.
 #### 2.2. Интерфейс пользователя <a name="2.2"></a>
 - Главное меню
-  ![MenuScreen](/../Images/Mockups/MainWindow.PNG)
+  ![MenuScreen](../Images/MainWindow.png)
   
 - Экран игрока №1, персонаж обозначен красным крестом , видно что игрок не знает о расположении стен на уровне которые еще не видел.
-![GameScreen1](/../Images/Mockups/Human.PNG)
+![GameScreen1](../Images/GameScreen1.png)
 - Экран игрока №2, минотавр обозначен красным крестом, минотавр знает о местоположении стен и сокровищ. 
-- ![GameScreen2](/../Images/Mockups/Monster.PNG)
+- ![GameScreen2](../Images/GameScreen2.png)
 В окне с игрой мы видим, что игровое поле в зависимости от роли в игровом процессе.
 -Экран окончания игры
-![GameOverMenu](/../Images/Mockups/GameOverMenu.png)
+![GameOverMenu](../Images/GaneOver.png)
 #### 2.3. Характеристики пользователей <a name="2.3">
 Целевая аудитория
 - Любители классических игр.
