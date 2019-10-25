@@ -19,6 +19,12 @@ public class RenderControl {
             temp=newVision;
             temp.removeAll(oldVision);
             temp.forEach(t->playField.getObjectByKey(t).makeVisible());
+            if(newVision.indexOf(playField.getHuman().getPosition())!=-1){
+                playField.getHuman().makeVisible();
+            }
+            if(newVision.indexOf(playField.getMonster().getPosition())!=-1){
+            playField.getMonster().makeVisible();
+          }
     }
     private int sign (double x) {
         return (x > 0) ? 1 : (x < 0) ? -1 : 0;

@@ -1,5 +1,6 @@
 package com.maze.game;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.maze.game.entity.Human;
 import com.maze.game.entity.Monster;
 import com.maze.game.entity.Point;
@@ -12,8 +13,13 @@ public class PlayField {
     private Map<Point, StaticObject> gameObjects;
     private Human human;
     private Monster monster;
+    TextureStorage textureStorage;
     public void addHuman(Human human) {
         this.human = human;
+    }
+    public void draw(Batch batch){
+
+        gameObjects.values().forEach(t->t.draw(batch,textureStorage));
     }
 
     public Human getHuman() {
