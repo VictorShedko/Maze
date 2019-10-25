@@ -1,5 +1,6 @@
 package com.maze.game;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.maze.game.fabric.Fabric;
 
 import java.util.Timer;
@@ -33,9 +34,9 @@ public class MainController {
         }
         return false;
     }
-    public void playFieldDraw(){
+    public void playFieldDraw(Batch batch){
         renderControl.reRender();
-        playField.draw();
+        playField.draw(batch);
     }
 
     public void changeTurn(){
