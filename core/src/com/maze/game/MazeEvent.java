@@ -1,7 +1,8 @@
 package com.maze.game;
 
+import com.maze.game.entity.Point;
+
 import java.util.function.Predicate;
-import java.util.function.UnaryOperator;
 
 public class MazeEvent {
     int eventStatus;

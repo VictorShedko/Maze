@@ -1,7 +1,6 @@
 package com.maze.game.entity;
 
 import com.maze.game.PlayField;
-import com.maze.game.Point;
 
 public class Human extends GameObject {
     int stepsPerTurn;
@@ -36,8 +35,10 @@ public class Human extends GameObject {
         this.stepsLeft=this.stepsPerTurn;
     }
 
-    public Human(int objectId, Point position, int status, int stepsPerTurn) {
+    public Human(int objectId, Point position, int status, int stepsPerTurn,int fieldOfVisionSize) {
         super(objectId, position, status);
         this.stepsPerTurn = stepsPerTurn;
+        this.fieldOfVisionSize=fieldOfVisionSize;
+        this.status=status;
     }
 }

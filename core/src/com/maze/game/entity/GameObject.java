@@ -1,7 +1,6 @@
 package com.maze.game.entity;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.maze.game.Point;
 
 public abstract class GameObject extends Actor {
     protected int objectId;

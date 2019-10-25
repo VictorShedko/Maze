@@ -1,22 +1,31 @@
 package com.maze.game;
 
-import com.maze.game.entity.GameObject;
 import com.maze.game.entity.Human;
+import com.maze.game.entity.Monster;
+import com.maze.game.entity.Point;
 import com.maze.game.entity.StaticObject;
 
 import java.util.Map;
 
 public class PlayField {
-
+    private final int size;
     private Map<Point, StaticObject> gameObjects;
     private Human human;
-
+    private Monster monster;
     public void addHuman(Human human) {
         this.human = human;
     }
 
     public Human getHuman() {
         return human;
+    }
+
+    public Monster getMonster() {
+        return monster;
+    }
+
+    public void addMonster(Monster monster) {
+        this.monster = monster;
     }
 
     public boolean addObjectToField(StaticObject obj){
@@ -32,7 +41,11 @@ public class PlayField {
         return gameObjects;
     }
 
-    public PlayField(Map<Point, StaticObject> gameObjects) {
-        this.gameObjects = gameObjects;
+    public int getSize() {
+        return size;
+    }
+
+    public PlayField(int size) {
+        this.size = size;
     }
 }

@@ -1,5 +1,6 @@
 package com.maze.game;
 
+import com.maze.game.entity.Point;
 import com.maze.game.entity.StaticObject;
 
 import java.util.ArrayList;

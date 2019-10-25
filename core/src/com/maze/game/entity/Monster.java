@@ -1,7 +1,5 @@
 package com.maze.game.entity;
 
-import com.maze.game.Point;
-
 public class Monster extends Human {
     public boolean isCaught(){
         if(this.parentField.getHuman().getPosition().equals(this.position)){
@@ -11,8 +9,7 @@ public class Monster extends Human {
         }
     }
 
-
-    public Monster(int objectId, Point position, int status, int stepsPerTurn) {
-        super(objectId, position, status, stepsPerTurn);
+    public Monster(int objectId, Point position, int status, int stepsPerTurn, int fieldOfVisionSize) {
+        super(objectId, position, status, stepsPerTurn, fieldOfVisionSize);
     }
 }

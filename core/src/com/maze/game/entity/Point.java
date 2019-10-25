@@ -1,8 +1,9 @@
-package com.maze.game;
+package com.maze.game.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Point {
+public class Point implements Serializable {
     int x,y;
 
     @Override

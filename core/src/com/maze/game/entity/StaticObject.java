@@ -1,7 +1,5 @@
 package com.maze.game.entity;
 
-import com.maze.game.Point;
-
 public class StaticObject extends GameObject{
     boolean isTraversable;
     boolean isCrystalline;
