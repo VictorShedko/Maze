@@ -7,6 +7,8 @@ import java.util.TimerTask;
 public class MainController {
     boolean isChestFind;
     boolean isExitFind;
+    PlayField playField;
+
     Timer timeToAutoTurnChange;
     TimerTask Chenger;
     int turn;//0 human 1 monster

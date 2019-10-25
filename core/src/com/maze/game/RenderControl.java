@@ -20,12 +20,12 @@ public class RenderControl {
             temp.removeAll(oldVision);
             temp.forEach(t->playField.getObjectByKey(t).makeVisible());
     }
-    private int sign (int x) {
+    private int sign (double x) {
         return (x > 0) ? 1 : (x < 0) ? -1 : 0;
         //возвращает 0, если аргумент (x) равен нулю; -1, если x < 0 и 1, если x > 0.
     }
 
-    protected void BresenhamLine (int xstart, int ystart, int xend, int yend)
+    protected void BresenhamLine (double xstart, double ystart, double xend, double yend)
     /**
      * xstart, ystart - начало;
      * xend, yend - конец;
@@ -33,7 +33,7 @@ public class RenderControl {
      * Можно писать что-нибудь вроде g.fillRect (x, y, 1, 1);
      */
     {
-        int x, y, dx, dy, incx, incy, pdx, pdy, es, el, err;
+        double x, y, dx, dy, incx, incy, pdx, pdy, es, el, err;
 
         dx = xend - xstart;//проекция на ось икс
         dy = yend - ystart;//проекция на ось игрек
@@ -90,6 +90,13 @@ public class RenderControl {
                 x += pdx;//продолжить тянуть прямую дальше, т.е. сдвинуть влево или вправо, если
                 y += pdy;//цикл идёт по иксу; сдвинуть вверх или вниз, если по y
             }
+            Double d1=x;
+            Double d2=y;
+            if(crystallineMatrix[d1.intValue()][d2.intValue()]==0){
+                this.newVision.add(new Point(d1.intValue(),d2.intValue()));
+            }else {
+                return;
+            }
 
         }
     }
@@ -97,7 +104,7 @@ public class RenderControl {
     protected void fillNewVision(int x,int y,int radius){
         for(double angle=0;angle<360;angle+=(0.02/radius)*360.0)
         {
-            this.BresenhamLine(x+0.5,y+0.5,x+0.5+radius*Math.sin(angle),)
+            this.BresenhamLine(x+0.5,y+0.5,x+0.5+radius*Math.sin(angle),y+0.5+radius*Math.cos(angle));
         }
      //   this.BresenhamLine(x+0.5,y+0.5,)
     }
