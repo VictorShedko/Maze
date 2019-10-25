@@ -3,7 +3,7 @@ package com.maze.game.entity;
 import com.maze.game.PlayField;
 import com.maze.game.Point;
 
-public class Human extends GameObject{
+public class Human extends GameObject {
     int stepsPerTurn;
     int stepsLeft;
     int fieldOfVisionSize;

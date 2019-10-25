@@ -7,7 +7,6 @@ public class MazeEvent {
     int eventStatus;
     Point position;
     Predicate<Point> condition;
-
     public int getEventStatus() {
         return eventStatus;
     }
