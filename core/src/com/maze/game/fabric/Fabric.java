@@ -28,9 +28,9 @@ public class Fabric {
 
     };
 
-    public void generateMap(int gameType){
+    public void generateMap(){
 
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map.dat")))
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map.bat")))
         {
             wallMap=(Integer[][])ois.readObject();
 
@@ -96,6 +96,8 @@ public class Fabric {
 
     }
 
-
-
+    public Fabric(EventSystem eventSystem, PlayField playField) {
+        this.eventSystem = eventSystem;
+        this.playField = playField;
+    }
 }

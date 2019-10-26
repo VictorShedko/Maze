@@ -35,7 +35,11 @@ public class Human extends GameObject {
         this.stepsLeft=this.stepsPerTurn;
     }
 
-    public Human(int objectId, Point position, int status, int stepsPerTurn,int fieldOfVisionSize) {
+    public int getFieldOfVisionSize() {
+        return fieldOfVisionSize;
+    }
+
+    public Human(int objectId, Point position, int status, int stepsPerTurn, int fieldOfVisionSize) {
         super(objectId, position, status);
         this.stepsPerTurn = stepsPerTurn;
         this.fieldOfVisionSize=fieldOfVisionSize;

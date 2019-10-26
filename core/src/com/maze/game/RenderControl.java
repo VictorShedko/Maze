@@ -1,6 +1,7 @@
 package com.maze.game;
 
 import com.badlogic.gdx.graphics.glutils.VertexArray;
+import com.maze.game.entity.Human;
 import com.maze.game.entity.Point;
 import com.maze.game.entity.StaticObject;
 
@@ -12,7 +13,14 @@ public class RenderControl {
     List<Point> newVision;
     int[][]  crystallineMatrix;
     PlayField playField;
-    public void reRender(){
+    public void reRender(int side){
+           Human player;
+            if (side==0){
+                player=playField.getHuman();
+            }else {
+                player=playField.getMonster();
+            }
+            this.fillNewVision(player.getPosition().getX(),player.getPosition().getY(),player.getFieldOfVisionSize());
             List<Point> temp=oldVision;
             temp.removeAll(newVision);
             temp.forEach(t->playField.getObjectByKey(t).makeInvisible());

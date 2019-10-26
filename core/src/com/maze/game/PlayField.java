@@ -6,6 +6,7 @@ import com.maze.game.entity.Monster;
 import com.maze.game.entity.Point;
 import com.maze.game.entity.StaticObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class PlayField {
@@ -31,7 +32,7 @@ public class PlayField {
     }
 
     public void addMonster(Monster monster) {
-        this.monster = monster;
+        this.monster= monster;
     }
 
     public boolean addObjectToField(StaticObject obj){
@@ -53,5 +54,6 @@ public class PlayField {
 
     public PlayField(int size) {
         this.size = size;
+        this.gameObjects=new HashMap<>();
     }
 }
