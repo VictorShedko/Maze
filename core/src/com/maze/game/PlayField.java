@@ -6,6 +6,9 @@ import com.maze.game.entity.Monster;
 import com.maze.game.entity.Point;
 import com.maze.game.entity.StaticObject;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,4 +59,24 @@ public class PlayField {
         this.size = size;
         this.gameObjects=new HashMap<>();
     }
+    public void see(){
+        File check=new File("check1.txt");
+        try {
+            FileWriter fl = new FileWriter(check);
+
+            for (int i = 0; i < 20; i++) {
+
+                for (int j = 0; j < 20; j++) {
+                   fl.write(gameObjects.get(new Point(i, j)).getObjectId() + '0');
+
+                }
+                fl.write("\n");
+            }
+            fl.write("suka");
+            fl.flush();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -3,6 +3,7 @@ package com.maze.game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.maze.game.fabric.Fabric;
 import com.maze.game.fabric.MapCreator;
+import com.maze.game.renderLogic.RenderControl;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -34,6 +35,7 @@ public class MainController {
             ret =playField.getMonster().moveTo(xShift,yShift);
         }
         if(ret){
+            eventSystem.update();
            if(isChestFind&&isExitFind){
                //human won;
            }
@@ -59,11 +61,11 @@ public class MainController {
     public MainController(int side) {
         this.side=side;
         MapCreator.createMap("map.bat");
-        playField=new PlayField(20);
+        playField=new PlayField(21);
         eventSystem=new EventSystem(this);
         fabric=new Fabric(eventSystem,playField);
         fabric.generateMap();
         renderControl=new RenderControl(playField);
-
+        playField.see();
     }
 }

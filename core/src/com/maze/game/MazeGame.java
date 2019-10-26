@@ -16,9 +16,11 @@ public class MazeGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		mainController =new MainController(0);
+
 		batch = new SpriteBatch();
 		img = new Texture("BasicFloor.png");
 		img1 = new Texture("badlogic.jpg");
+
 		cam = new OrthographicCamera(200, 200 );
 		cam.position.set(100, 100, 0);
 		cam.update();

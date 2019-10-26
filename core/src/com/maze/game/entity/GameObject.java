@@ -10,6 +10,10 @@ public abstract class GameObject extends Actor {
     protected int status;//0- never seen before,1- has been seen but now out of range 2 in vision
     protected Point position;
 
+    public int getObjectId() {
+        return objectId;
+    }
+
     public Point getPosition() {
         return position;
     }

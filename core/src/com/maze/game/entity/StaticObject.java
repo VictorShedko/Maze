@@ -24,8 +24,9 @@ public class StaticObject extends GameObject{
         if(isCrystalline)return 1;
         return 0;
     }
-    public StaticObject(int objectId, Point position, int status, boolean isTraversable) {
+    public StaticObject(int objectId, Point position, int status, boolean isTraversable ,boolean isCrystalline) {
         super(objectId, position, status);
         this.isTraversable = isTraversable;
+        this.isCrystalline =isCrystalline;
     }
 }

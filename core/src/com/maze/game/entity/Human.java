@@ -3,10 +3,10 @@ package com.maze.game.entity;
 import com.maze.game.PlayField;
 
 public class Human extends GameObject {
-    int stepsPerTurn;
-    int stepsLeft;
-    int fieldOfVisionSize;
-    PlayField parentField;
+    protected int stepsPerTurn;
+    protected int stepsLeft;
+    protected int fieldOfVisionSize;
+    protected PlayField parentField;
     @Override
     public void makeVisible() {
     this.status=2;
@@ -18,7 +18,7 @@ public class Human extends GameObject {
     }
     public boolean moveTo(int xShift,int yShift){
         Point destinationPoint= new Point(this.position.getX()+xShift,this.position.getY()+yShift);
-        if((parentField.getObjectByKey(destinationPoint).isTraversable)&&(stepsLeft>0)){
+        if((parentField.getObjectByKey(destinationPoint).isTraversable())&&(stepsLeft>0)){
             position.setX(position.getX()+xShift);
             position.setY(position.getY()+yShift);
             return true;
@@ -39,10 +39,11 @@ public class Human extends GameObject {
         return fieldOfVisionSize;
     }
 
-    public Human(int objectId, Point position, int status, int stepsPerTurn, int fieldOfVisionSize) {
+    public Human(int objectId, Point position, int status, int stepsPerTurn, int fieldOfVisionSize,PlayField playField) {
         super(objectId, position, status);
         this.stepsPerTurn = stepsPerTurn;
         this.fieldOfVisionSize=fieldOfVisionSize;
         this.status=status;
+        this.parentField=parentField;
     }
 }
