@@ -24,7 +24,10 @@ public class MazeGame extends ApplicationAdapter {
 
 
 
-		while (!isGameActive);
+		while (!isGameActive){
+			ourSideSocket.sendMessage(new Message(0,0,0,0));
+			System.out.println("1");
+		}
 		mainController =new MainController(playSide,ourSideSocket);
 
 		batch = new SpriteBatch();

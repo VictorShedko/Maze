@@ -18,6 +18,10 @@ public class Message implements Serializable {
         return extend2;
     }
 
+    public int getExtend3() {
+        return extend3;
+    }
+
     public Message(int code, int extend1, int extend2, int extend3) {
         this.code = code;
         this.extend1 = extend1;
