@@ -21,8 +21,8 @@ public class MazeGame extends ApplicationAdapter {
 		img = new Texture("BasicFloor.png");
 		img1 = new Texture("badlogic.jpg");
 
-		cam = new OrthographicCamera(400, 400 );
-		cam.position.set(100, 255, 0);
+		cam = new OrthographicCamera(400, 400);
+		cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
 		cam.update();
 
 	}

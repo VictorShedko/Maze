@@ -28,6 +28,14 @@ public class MainController {
     public void setExitFind(boolean exitFind) {
         isExitFind = exitFind;
     }
+    public int getCamX(){
+        if(side==0)return playField.getHuman().getPosition().getX()*32;
+        return playField.getMonster().getPosition().getX()*32;
+    }
+    public int getCamY(){
+        if(side==0)return playField.getHuman().getPosition().getY()*32;
+        return playField.getMonster().getPosition().getY()*32;
+    }
 
     public boolean moveRequest(int xShift,int yShift,int side){
         Human player;
