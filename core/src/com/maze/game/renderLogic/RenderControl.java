@@ -50,10 +50,11 @@ public class RenderControl {
 
     protected void BresenhamLine (double xStart, double yStart, double xEnd, double yEnd)
     {
-        double x, y, dx, dy, incx, incy, pdx, pdy, es, el, err;
+        double  dx, dy;
         Double xMin=Math.min(xStart,xEnd);
         Double xMax=Math.max(xStart,xEnd);
-
+        Double yMin=Math.min(yStart,yEnd);
+        Double yMax=Math.max(yStart,yEnd);
         dx = xEnd - xStart;//проекция на ось икс
         dy = yEnd - yStart;//проекция на ось игрек
         List<Intersections>  rayTrack=new ArrayList<Intersections>();
@@ -61,13 +62,23 @@ public class RenderControl {
             Intersections in= new Intersections(i,yStart+(i-xStart*dy)/dx);
             rayTrack.add(in);
         }
-       // rayTrack.sort(Comparator.comparing(t));
+        for (int i=(int)Math.ceil(yMin);i<(int)Math.floor(yMax);i++){
+            Intersections in= new Intersections(xStart+i*dx/dy,i);
+            rayTrack.add(in);
+        }
+        rayTrack.sort((o1,o2)->o1.compareTo(o2));
+        for(Intersections i:rayTrack){
+            Double x=i.getX();
+            Double y=i.getY();
+           newVision.add(new Point(x.intValue(),y.intValue()));
+           if(crystallineMatrix[x.intValue()][y.intValue()]==0)return;
 
+        }
 
     }
 
     protected void fillNewVision(int x,int y,int radius){
-        for(double angle=0;angle<360;angle+=(0.02/radius)*360.0)
+        for(double angle=0;angle<7;angle+=(1.5/radius))
         {
             this.BresenhamLine(x+0.5,y+0.5,x+0.5+radius*Math.sin(angle),y+0.5+radius*Math.cos(angle));
         }

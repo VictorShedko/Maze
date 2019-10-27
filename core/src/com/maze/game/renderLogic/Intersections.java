@@ -1,6 +1,6 @@
 package com.maze.game.renderLogic;
 
-public class Intersections {
+public class Intersections implements Comparable<Intersections>{
     private double x,y,range;
 
     public void setRange(Intersections obj) {
@@ -15,7 +15,14 @@ public class Intersections {
         return y;
     }
 
-    public Intersections(double x,double y) {
+    @Override
+    public int compareTo(Intersections o) {
+      if(this.range-o.range>0)return 1;
+      if(this.range-o.range==0)return 0;
+      return -1;
+    }
+
+    public Intersections(double x, double y) {
         this.x = x;
         this.y = y;
     }
