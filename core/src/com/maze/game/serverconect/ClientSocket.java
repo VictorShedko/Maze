@@ -77,7 +77,7 @@ public class ClientSocket extends Thread {
         this.game=game;
         try {
             clientSocket = new Socket("localhost", 8080);
-
+///bolno
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             int a=0;
