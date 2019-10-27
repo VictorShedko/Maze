@@ -47,6 +47,31 @@ public class TextureStorage {
             textureBank[6][1]=exitDark;
             textureBank[6][2]=exitLight;
 
+        }else {
+            textureBank[1][0]=empty;
+            textureBank[1][1]=empty;
+            textureBank[1][2]=human;
+
+            textureBank[2][0]=empty;
+            textureBank[2][1]=empty;
+            textureBank[2][2]=monster;
+
+            textureBank[3][0]=wallLight;
+            textureBank[3][1]=wallLight;
+            textureBank[3][2]=wallLight;
+
+            textureBank[4][0]=floorLight;
+            textureBank[4][1]=floorLight;
+            textureBank[4][2]=floorLight;
+
+            textureBank[5][0]=chestDark;
+            textureBank[5][1]=chestLight;
+            textureBank[5][2]=chestDark;
+
+            textureBank[6][0]=wallLight;
+            textureBank[6][1]=exitDark;
+            textureBank[6][2]=exitLight;
+
         }
 
     }

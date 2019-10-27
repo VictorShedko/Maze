@@ -7,15 +7,26 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.maze.game.serverconect.ClientSocket;
 
 public class MazeGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img,img1;
+	int playSide=1;
 	OrthographicCamera cam;
 	MainController mainController;
+	ClientSocket ourSideSocket;
+	boolean isGameActive=false;
 	@Override
 	public void create () {
-		mainController =new MainController(0);
+		ourSideSocket=new ClientSocket();
+		ourSideSocket.run();
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		mainController =new MainController(playSide);
 
 		batch = new SpriteBatch();
 		img = new Texture("BasicFloor.png");
@@ -48,26 +59,33 @@ public class MazeGame extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+
+	public void notifyStart(int side){
+		this.playSide=side;
+		this.isGameActive=true;
+	}
+
+
 	private void handleInput() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-			if(mainController.moveRequest(-1,0,0)) {
+			if(mainController.moveRequest(-1,0,playSide)) {
 				cam.translate(-32, 0, 0);
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-			if(mainController.moveRequest(1,0,0)) {
+			if(mainController.moveRequest(1,0,playSide)) {
 				cam.translate(32, 0, 0);
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 
-			if(mainController.moveRequest(0,-1,0)){
+			if(mainController.moveRequest(0,-1,playSide)){
 				cam.translate(0, -32, 0);
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if(mainController.moveRequest(0,1,0)) {
+			if(mainController.moveRequest(0,1,playSide)) {
 				cam.translate(0, 32, 0);
 			}
 		}
