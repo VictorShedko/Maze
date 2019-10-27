@@ -8,4 +8,8 @@ public class TimerTaskChangeTurn extends TimerTask {
     public void run() {
         mainController.changeTurn();
     }
+
+    public TimerTaskChangeTurn(MainController mainController) {
+        this.mainController = mainController;
+    }
 }

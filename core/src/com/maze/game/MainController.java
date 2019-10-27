@@ -1,6 +1,7 @@
 package com.maze.game;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.maze.game.entity.Human;
 import com.maze.game.fabric.Fabric;
 import com.maze.game.fabric.MapCreator;
 import com.maze.game.renderLogic.RenderControl;
@@ -16,8 +17,8 @@ public class MainController {
     PlayField playField;
     EventSystem eventSystem;
     Fabric fabric;
-    Timer timeToAutoTurnChange;
-    TimerTask Chenger;
+    Timer timeToAutoTurnChange=new Timer();
+    TimerTaskChangeTurn t=new TimerTaskChangeTurn(this);
     RenderControl renderControl;
     int turn;//0 human 1 monster
     public void setChestFind(boolean chestFind) {
@@ -29,11 +30,17 @@ public class MainController {
     }
 
     public boolean moveRequest(int xShift,int yShift,int side){
+        Human player;
         boolean ret=false;
-        if(turn==side){
-           if(side==0)  ret=playField.getHuman().moveTo(xShift,yShift);
-            ret =playField.getMonster().moveTo(xShift,yShift);
-        }
+       // if(turn==side){
+           if(side==0) { player=playField.getHuman();}
+          else {
+               player = playField.getMonster();
+          }
+            ret=player.moveTo(xShift, yShift);
+          //  if(player.getStepsLeft()==0)this.changeTurn();
+    //    }
+
         if(ret){
             eventSystem.update();
            if(isChestFind&&isExitFind){
@@ -42,20 +49,24 @@ public class MainController {
             if(playField.getMonster().isCaught()){
                 //monster won;
             }
+            return true;
         }else {
             return false;
         }
-        return false;
+
     }
 
     public void playFieldDraw(Batch batch){
-        renderControl.reRender(side);
+        renderControl.reRender(side,batch);
         playField.draw(batch);
     }
 
     public void changeTurn(){
         turn=turn==1 ? 0:1;
-
+        playField.refreshSteps(turn);
+        t.cancel();
+        t=new TimerTaskChangeTurn(this);
+        timeToAutoTurnChange.schedule(t,1000);
     }
 
     public MainController(int side) {
@@ -68,5 +79,8 @@ public class MainController {
         fabric.generateMap();
         renderControl=new RenderControl(playField);
         playField.see();
+        playField.refreshSteps(side);
+
+        timeToAutoTurnChange.schedule(t,5000);
     }
 }

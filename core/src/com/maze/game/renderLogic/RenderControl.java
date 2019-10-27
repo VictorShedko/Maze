@@ -1,5 +1,6 @@
 package com.maze.game.renderLogic;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.VertexArray;
 import com.maze.game.PlayField;
 import com.maze.game.entity.Human;
@@ -20,7 +21,8 @@ public class RenderControl {
     List<Point> newVision;
     Integer[][]  crystallineMatrix=new Integer[21][21] ;
     PlayField playField;
-    public void reRender(int side){
+    Batch batch;
+    public void reRender(int side,Batch batch){
            Human player;
             if (side==0){
                 player=playField.getHuman();
@@ -28,9 +30,9 @@ public class RenderControl {
                 player=playField.getMonster();
             }
 
-
+            newVision.clear();
             this.fillNewVision(player.getPosition().getX(),player.getPosition().getY(),player.getFieldOfVisionSize());
-            List<Point> temp=oldVision;
+            List<Point> temp=new ArrayList<>(oldVision);
 
         File check=new File("check1.txt");
         try {
@@ -50,7 +52,7 @@ public class RenderControl {
         }
             temp.removeAll(newVision);
             temp.forEach(t->playField.getObjectByKey(t).makeInvisible());
-            temp=newVision;
+            temp=new ArrayList<>(newVision);
             temp.removeAll(oldVision);
             temp.forEach(t->playField.getObjectByKey(t).makeVisible());
             if(newVision.indexOf(playField.getHuman().getPosition())!=-1){
@@ -78,7 +80,7 @@ public class RenderControl {
                 a1=(int)Math.ceil(x+dx);
             }
         }else {
-            a1=(int)Math.floor(x);
+            a1=(int)Math.ceil(x);
         }
         if ((y == Math.floor(y)) && !Double.isInfinite(y)) {
             if (dy > 0) {
@@ -88,7 +90,7 @@ public class RenderControl {
                 a2 = (int) Math.ceil(y + dy);
             }
         }else {
-            a2=(int) Math.floor(y);
+            a2=(int) Math.ceil(y);
         }
         Point p=new Point(a1,a2);
         if(newVision.indexOf(p)==-1){
@@ -110,10 +112,10 @@ public class RenderControl {
         Intersections startPoint=new Intersections(xStart,yStart);
         dx = xEnd - xStart;//проекция на ось икс
         dy = yEnd - yStart;//проекция на ось игрек
-        double ex=dx/100.0,ey=dy/100.0;
+        double ex=sign(dx)*0.000001,ey=sign(dy)*0.000001;
         List<Intersections>  rayTrack=new ArrayList<Intersections>();
         for (int i=(int)Math.ceil(xMin);i<=(int)Math.floor(xMax);i++){
-            Intersections in= new Intersections(i,yStart+(i-xStart*dy)/dx);
+            Intersections in= new Intersections(i,yStart+(i-xStart)*dy/dx);
             in.setRange(startPoint);
             rayTrack.add(in);
         }
@@ -123,10 +125,24 @@ public class RenderControl {
             rayTrack.add(in);
         }
         rayTrack.sort((o1,o2)->o2.compareTo(o1));
+        File chack=new File("check3.txt");
+
+        try {
+            FileWriter fl = new FileWriter(chack,true);
+
+            for (int i = 0; i < rayTrack.size(); i++) {
+
+                    fl.write(rayTrack.get(i).getX()+" "+rayTrack.get(i).getY()+"   ");
+            }
+            fl.write("\n");
+            fl.flush();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
         for(int i=rayTrack.size()-1;i>=0;i--){
             Double x=rayTrack.get(i).getX();
             Double y=rayTrack.get(i).getY();
-            if(this.addToList(x,y,ex,ey))return;
+            if(addToList(x,y,ex,ey))return;
 
         }
 

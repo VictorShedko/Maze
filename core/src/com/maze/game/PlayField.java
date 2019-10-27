@@ -26,6 +26,7 @@ public class PlayField {
 
         gameObjects.values().forEach(t->t.draw(batch,textureStorage));
       human.draw(batch,textureStorage);
+      monster.draw(batch,textureStorage);
     }
 
     public Human getHuman() {
@@ -62,6 +63,16 @@ public class PlayField {
         this.gameObjects=new HashMap<>();
         this.textureStorage=storage;
     }
+    public void refreshSteps(int side){
+        if(side==0){
+           human.refreshSteps();
+        }else {
+            monster.refreshSteps();
+        }
+
+
+    }
+
     public void see(){
         File check=new File("check1.txt");
         try {

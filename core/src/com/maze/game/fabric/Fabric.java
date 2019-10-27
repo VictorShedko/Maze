@@ -59,11 +59,11 @@ public class Fabric {
             for(Instruction i:instructions){
                 switch (i.getType()){
                     case 1 : {
-                        temp=new Human(1,i.p,0,5,7,playField);
+                        temp=new Human(1,i.p,0,5,5,playField);
                         playField.addHuman((Human)temp);
                 };break;
                     case 2 : {
-                        temp=new Monster(2,i.p,0,10,5,playField);
+                        temp=new Monster(2,i.p,0,10,4,playField);
                         playField.addMonster((Monster)temp);
                     };break;
                     case 5 : {

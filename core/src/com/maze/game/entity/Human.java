@@ -21,6 +21,7 @@ public class Human extends GameObject {
         if((parentField.getObjectByKey(destinationPoint).isTraversable())&&(stepsLeft>0)){
             position.setX(position.getX()+xShift);
             position.setY(position.getY()+yShift);
+            this.stepsLeft--;
             return true;
         }else {
 
@@ -44,6 +45,6 @@ public class Human extends GameObject {
         this.stepsPerTurn = stepsPerTurn;
         this.fieldOfVisionSize=fieldOfVisionSize;
         this.status=status;
-        this.parentField=parentField;
+        this.parentField=playField;
     }
 }

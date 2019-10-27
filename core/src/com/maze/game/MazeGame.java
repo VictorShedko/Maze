@@ -21,8 +21,8 @@ public class MazeGame extends ApplicationAdapter {
 		img = new Texture("BasicFloor.png");
 		img1 = new Texture("badlogic.jpg");
 
-		cam = new OrthographicCamera(200, 200 );
-		cam.position.set(100, 100, 0);
+		cam = new OrthographicCamera(400, 400 );
+		cam.position.set(100, 255, 0);
 		cam.update();
 
 	}
@@ -50,17 +50,26 @@ public class MazeGame extends ApplicationAdapter {
 	}
 	private void handleInput() {
 
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			cam.translate(-3, 0, 0);
+		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
+			if(mainController.moveRequest(-1,0,0)) {
+				cam.translate(-32, 0, 0);
+			}
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			cam.translate(3, 0, 0);
+		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			if(mainController.moveRequest(1,0,0)) {
+				cam.translate(32, 0, 0);
+			}
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			cam.translate(0, -3, 0);
+		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+
+			if(mainController.moveRequest(0,-1,0)){
+				cam.translate(0, -32, 0);
+			}
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			cam.translate(0, 3, 0);
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+			if(mainController.moveRequest(0,1,0)) {
+				cam.translate(0, 32, 0);
+			}
 		}
 
 		}

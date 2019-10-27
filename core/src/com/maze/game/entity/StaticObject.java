@@ -9,7 +9,7 @@ public class StaticObject extends GameObject{
 
     @Override
     public void makeInvisible() {
-        this.status=0;
+        this.status=1;
     }
 
     @Override

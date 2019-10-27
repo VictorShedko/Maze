@@ -12,12 +12,13 @@ public class TextureStorage {
     Texture wallLight=new Texture("WallLight.png");
     Texture floorDark=new Texture("BasicFloor.png");
     Texture floorLight=new Texture("BasicFloor.png");
-    Texture chestLight;
-    Texture chestDark;
-    Texture exitLight;
-    Texture exitDark;
+    Texture chestLight=new Texture("chest.png");
+    Texture chestDark=new Texture("chest.png");
+    Texture exitLight=new Texture("exit.png");
+    Texture exitDark=new Texture("exit.png");
     Texture human=new Texture("Human.png");
     Texture empty=new Texture("Empty.png");
+    Texture monster=new Texture("Monster.png");
     public TextureStorage(int gameType) {
 
 
@@ -28,23 +29,23 @@ public class TextureStorage {
 
             textureBank[2][0]=empty;
             textureBank[2][1]=empty;
-            textureBank[2][2]=human;
+            textureBank[2][2]=monster;
 
             textureBank[3][0]=fogOfWar;
-            textureBank[3][1]=wallDark;
+            textureBank[3][1]=fogOfWar;
             textureBank[3][2]=wallLight;
 
             textureBank[4][0]=fogOfWar;
-            textureBank[4][1]=floorDark;
+            textureBank[4][1]=fogOfWar;
             textureBank[4][2]=floorLight;
 
             textureBank[5][0]=fogOfWar;
-            textureBank[5][1]=floorDark;
-            textureBank[5][2]=floorDark;
+            textureBank[5][1]=chestLight;
+            textureBank[5][2]=chestDark;
 
             textureBank[6][0]=fogOfWar;
-            textureBank[6][1]=floorDark;
-            textureBank[6][2]=floorDark;
+            textureBank[6][1]=exitDark;
+            textureBank[6][2]=exitLight;
 
         }
 

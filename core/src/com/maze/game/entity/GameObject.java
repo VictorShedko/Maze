@@ -21,7 +21,7 @@ public abstract class GameObject extends Actor {
     public abstract void makeInvisible();
     public void draw(Batch batch, TextureStorage store){
         batch.draw(store.getTextureBank(objectId,status),position.getX()*32f,position.getY()*32f);
-        if(status==1)this.setVisible(false);
+        //if(status==1)this.setVisible(false);
     }
     public GameObject(int objectId, Point position, int status) {
         this.objectId = objectId;
