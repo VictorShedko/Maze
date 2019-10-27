@@ -4,7 +4,7 @@ public class Intersections implements Comparable<Intersections>{
     private double x,y,range;
 
     public void setRange(Intersections obj) {
-        this.range = Math.sqrt(Math.pow(this.x-this.y,2)+Math.pow(obj.getX()-obj.getY(),2));
+        this.range = Math.sqrt(Math.pow(this.x-obj.getX(),2)+Math.pow(this.y-obj.getY(),2));
     }
 
     public double getX() {

@@ -31,6 +31,7 @@ public class RenderControl {
             }
 
             newVision.clear();
+            newVision.add(player.getPosition());
             this.fillNewVision(player.getPosition().getX(),player.getPosition().getY(),player.getFieldOfVisionSize());
             List<Point> temp=new ArrayList<>(oldVision);
 
@@ -54,6 +55,8 @@ public class RenderControl {
             temp.forEach(t->playField.getObjectByKey(t).makeInvisible());
             temp=new ArrayList<>(newVision);
             temp.removeAll(oldVision);
+            oldVision.clear();
+            oldVision.addAll(newVision);
             temp.forEach(t->playField.getObjectByKey(t).makeVisible());
             if(newVision.indexOf(playField.getHuman().getPosition())!=-1){
                 playField.getHuman().makeVisible();
@@ -72,26 +75,8 @@ public class RenderControl {
         if(x<0||x>20)return true;
         if(y<0||y>20)return true;
         int a1,a2;
-        if ((x == Math.floor(x)) && !Double.isInfinite(x)) {
-            if(dx>0){
-
-                a1=(int)Math.floor(x+dx);
-            }else {
-                a1=(int)Math.ceil(x+dx);
-            }
-        }else {
-            a1=(int)Math.ceil(x);
-        }
-        if ((y == Math.floor(y)) && !Double.isInfinite(y)) {
-            if (dy > 0) {
-
-                a2 = (int) Math.floor(y + dy);
-            } else {
-                a2 = (int) Math.ceil(y + dy);
-            }
-        }else {
-            a2=(int) Math.ceil(y);
-        }
+        a1=(int)Math.floor(x+dx);
+        a2=(int)Math.floor(y+dy);
         Point p=new Point(a1,a2);
         if(newVision.indexOf(p)==-1){
             newVision.add(p);
