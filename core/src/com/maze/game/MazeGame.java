@@ -35,10 +35,11 @@ public class MazeGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		//batch.setProjectionMatrix(cam.combined);
-		mainController.playFieldDraw(batch);
+
 		batch.begin();
-		batch.draw(img, 100, 100);
-		batch.draw(img1,0,0);
+		mainController.playFieldDraw(batch);
+		//batch.draw(img, 100, 100);
+	//	batch.draw(img1,0,0);
 		batch.end();
 	}
 	

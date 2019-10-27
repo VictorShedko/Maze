@@ -61,7 +61,8 @@ public class MainController {
     public MainController(int side) {
         this.side=side;
         MapCreator.createMap("map.bat");
-        playField=new PlayField(21);
+        TextureStorage textureStorage=new TextureStorage(side);
+        playField=new PlayField(21,textureStorage);
         eventSystem=new EventSystem(this);
         fabric=new Fabric(eventSystem,playField);
         fabric.generateMap();

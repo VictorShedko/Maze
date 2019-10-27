@@ -1,5 +1,6 @@
 package com.maze.game;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.maze.game.entity.Human;
 import com.maze.game.entity.Monster;
@@ -24,6 +25,7 @@ public class PlayField {
     public void draw(Batch batch){
 
         gameObjects.values().forEach(t->t.draw(batch,textureStorage));
+      human.draw(batch,textureStorage);
     }
 
     public Human getHuman() {
@@ -55,9 +57,10 @@ public class PlayField {
         return size;
     }
 
-    public PlayField(int size) {
+    public PlayField(int size, TextureStorage storage) {
         this.size = size;
         this.gameObjects=new HashMap<>();
+        this.textureStorage=storage;
     }
     public void see(){
         File check=new File("check1.txt");

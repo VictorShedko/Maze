@@ -31,6 +31,23 @@ public class RenderControl {
 
             this.fillNewVision(player.getPosition().getX(),player.getPosition().getY(),player.getFieldOfVisionSize());
             List<Point> temp=oldVision;
+
+        File check=new File("check1.txt");
+        try {
+            FileWriter fl = new FileWriter(check);
+
+            for (int i = 0; i < newVision.size(); i++) {
+
+
+                    fl.write(newVision.get(i).getX()+" "+newVision.get(i).getY()+"\n");
+
+
+            }
+            fl.write("suka");
+            fl.flush();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
             temp.removeAll(newVision);
             temp.forEach(t->playField.getObjectByKey(t).makeInvisible());
             temp=newVision;
@@ -47,6 +64,41 @@ public class RenderControl {
         return (x > 0) ? 1 : (x < 0) ? -1 : 0;
         //возвращает 0, если аргумент (x) равен нулю; -1, если x < 0 и 1, если x > 0.
     }
+    protected boolean addToList(Double x,Double y,Double dx,Double dy){
+
+
+        if(x<0||x>20)return true;
+        if(y<0||y>20)return true;
+        int a1,a2;
+        if ((x == Math.floor(x)) && !Double.isInfinite(x)) {
+            if(dx>0){
+
+                a1=(int)Math.floor(x+dx);
+            }else {
+                a1=(int)Math.ceil(x+dx);
+            }
+        }else {
+            a1=(int)Math.floor(x);
+        }
+        if ((y == Math.floor(y)) && !Double.isInfinite(y)) {
+            if (dy > 0) {
+
+                a2 = (int) Math.floor(y + dy);
+            } else {
+                a2 = (int) Math.ceil(y + dy);
+            }
+        }else {
+            a2=(int) Math.floor(y);
+        }
+        Point p=new Point(a1,a2);
+        if(newVision.indexOf(p)==-1){
+            newVision.add(p);
+        }
+        if(crystallineMatrix[a1][a2]==0)return true;
+        return false;
+    }
+
+
 
     protected void BresenhamLine (double xStart, double yStart, double xEnd, double yEnd)
     {
@@ -55,23 +107,26 @@ public class RenderControl {
         Double xMax=Math.max(xStart,xEnd);
         Double yMin=Math.min(yStart,yEnd);
         Double yMax=Math.max(yStart,yEnd);
+        Intersections startPoint=new Intersections(xStart,yStart);
         dx = xEnd - xStart;//проекция на ось икс
         dy = yEnd - yStart;//проекция на ось игрек
+        double ex=dx/100.0,ey=dy/100.0;
         List<Intersections>  rayTrack=new ArrayList<Intersections>();
-        for (int i=(int)Math.ceil(xMin);i<(int)Math.floor(xMax);i++){
+        for (int i=(int)Math.ceil(xMin);i<=(int)Math.floor(xMax);i++){
             Intersections in= new Intersections(i,yStart+(i-xStart*dy)/dx);
+            in.setRange(startPoint);
             rayTrack.add(in);
         }
-        for (int i=(int)Math.ceil(yMin);i<(int)Math.floor(yMax);i++){
-            Intersections in= new Intersections(xStart+i*dx/dy,i);
+        for (int i=(int)Math.ceil(yMin);i<=(int)Math.floor(yMax);i++){
+            Intersections in= new Intersections(xStart+(i-yStart)*dx/dy,i);
+            in.setRange(startPoint);
             rayTrack.add(in);
         }
-        rayTrack.sort((o1,o2)->o1.compareTo(o2));
-        for(Intersections i:rayTrack){
-            Double x=i.getX();
-            Double y=i.getY();
-           newVision.add(new Point(x.intValue(),y.intValue()));
-           if(crystallineMatrix[x.intValue()][y.intValue()]==0)return;
+        rayTrack.sort((o1,o2)->o2.compareTo(o1));
+        for(int i=rayTrack.size()-1;i>=0;i--){
+            Double x=rayTrack.get(i).getX();
+            Double y=rayTrack.get(i).getY();
+            if(this.addToList(x,y,ex,ey))return;
 
         }
 
