@@ -5,6 +5,8 @@ import com.maze.game.entity.Human;
 import com.maze.game.fabric.Fabric;
 import com.maze.game.fabric.MapCreator;
 import com.maze.game.renderLogic.RenderControl;
+import com.maze.game.serverconect.ClientSocket;
+import com.maze.game.serverconect.Message;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,6 +15,7 @@ import java.util.TimerTask;
 public class MainController {
     boolean isChestFind;
     boolean isExitFind;
+    ClientSocket socket;
     int side;//0 human 1 monster
     PlayField playField;
     EventSystem eventSystem;
@@ -40,22 +43,26 @@ public class MainController {
     public boolean moveRequest(int xShift,int yShift,int side){
         Human player;
         boolean ret=false;
-       // if(turn==side){
+       if(turn==side){
            if(side==0) { player=playField.getHuman();}
           else {
                player = playField.getMonster();
           }
             ret=player.moveTo(xShift, yShift);
-          //  if(player.getStepsLeft()==0)this.changeTurn();
-    //    }
+            if(player.getStepsLeft()==0) {
+                changeTurn();
+                socket.sendMessage(new Message(1,0,0,0));
+
+            }
+       }
 
         if(ret){
             eventSystem.update();
            if(isChestFind&&isExitFind){
-               //human won;
+               socket.sendMessage(new Message(4,0,0,0));
            }
             if(playField.getMonster().isCaught()){
-                //monster won;
+                socket.sendMessage(new Message(4,1,0,0));
             }
             return true;
         }else {
@@ -72,13 +79,11 @@ public class MainController {
     public void changeTurn(){
         turn=turn==1 ? 0:1;
         playField.refreshSteps(turn);
-        t.cancel();
-        t=new TimerTaskChangeTurn(this);
-        timeToAutoTurnChange.schedule(t,1000);
     }
 
-    public MainController(int side) {
+    public MainController(int side, ClientSocket socket) {
         this.side=side;
+        this.socket=socket;
         MapCreator.createMap("map.bat");
         TextureStorage textureStorage=new TextureStorage(side);
         playField=new PlayField(21,textureStorage);
@@ -86,9 +91,7 @@ public class MainController {
         fabric=new Fabric(eventSystem,playField);
         fabric.generateMap();
         renderControl=new RenderControl(playField);
-        playField.see();
-        playField.refreshSteps(side);
+      //  playField.see();
 
-        timeToAutoTurnChange.schedule(t,5000);
     }
 }

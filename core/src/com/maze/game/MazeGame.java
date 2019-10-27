@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.maze.game.serverconect.ClientSocket;
+import com.maze.game.serverconect.Message;
 
 public class MazeGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -19,14 +20,12 @@ public class MazeGame extends ApplicationAdapter {
 	boolean isGameActive=false;
 	@Override
 	public void create () {
-		ourSideSocket=new ClientSocket();
-		ourSideSocket.run();
-		try {
-			wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		mainController =new MainController(playSide);
+		ourSideSocket=new ClientSocket(this);
+
+
+
+		while (!isGameActive);
+		mainController =new MainController(playSide,ourSideSocket);
 
 		batch = new SpriteBatch();
 		img = new Texture("BasicFloor.png");
@@ -36,6 +35,10 @@ public class MazeGame extends ApplicationAdapter {
 		cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
 		cam.update();
 
+	}
+
+	public void setPlaySide(int playSide) {
+		this.playSide = playSide;
 	}
 
 	@Override
@@ -66,27 +69,39 @@ public class MazeGame extends ApplicationAdapter {
 	}
 
 
+	public void setGameActive(boolean gameActive) {
+		isGameActive = gameActive;
+	}
+
+	public MainController getMainController() {
+		return mainController;
+	}
+
 	private void handleInput() {
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 			if(mainController.moveRequest(-1,0,playSide)) {
 				cam.translate(-32, 0, 0);
+				ourSideSocket.sendMessage(new Message(2,-1,0,playSide));
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
 			if(mainController.moveRequest(1,0,playSide)) {
 				cam.translate(32, 0, 0);
+				ourSideSocket.sendMessage(new Message(2,1,0,playSide));
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 
 			if(mainController.moveRequest(0,-1,playSide)){
 				cam.translate(0, -32, 0);
+				ourSideSocket.sendMessage(new Message(2,0,-1,playSide));
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
 			if(mainController.moveRequest(0,1,playSide)) {
 				cam.translate(0, 32, 0);
+				ourSideSocket.sendMessage(new Message(2,0,1,playSide));
 			}
 		}
 
