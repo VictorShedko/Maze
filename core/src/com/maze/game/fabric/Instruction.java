@@ -1,17 +1,17 @@
 package com.maze.game.fabric;
 
-import com.maze.game.entity.Point;
+import com.maze.game.gamemodel.entity.Point;
 
 import java.io.Serializable;
 
 public class Instruction implements Serializable {
-int type;
-Point p;
-boolean travable;
-boolean cristalline;
-int eventType;
-Point eventPos;
-int angle;
+    int type;
+    Point p;
+    boolean travable;
+    boolean cristalline;
+    int eventType;
+    Point eventPos;
+    int angle;
 
     public int getAngle() {
         return angle;
@@ -42,12 +42,12 @@ int angle;
     }
 
     public Instruction(int type, Point p, boolean travable, boolean cristalline, int eventType, Point eventPos, int angle) {
-       this.angle=angle;
-       this.cristalline=cristalline;
-       this.eventPos=eventPos;
-       this.type=type;
-       this.travable=travable;
-       this.eventType=eventType;
-       this.p=p;
+        this.angle = angle;
+        this.cristalline = cristalline;
+        this.eventPos = eventPos;
+        this.type = type;
+        this.travable = travable;
+        this.eventType = eventType;
+        this.p = p;
     }
 }

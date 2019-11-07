@@ -1,10 +1,12 @@
 package com.maze.game.fabric;
 
-import com.maze.game.EventSystem;
-import com.maze.game.MainController;
-import com.maze.game.MazeEvent;
-import com.maze.game.PlayField;
-import com.maze.game.entity.*;
+import com.maze.game.gamemodel.controlers.EventSystem;
+import com.maze.game.gamemodel.controlers.MainController;
+import com.maze.game.gamemodel.entity.MazeEvent;
+import com.maze.game.gamemodel.PlayField;
+import com.maze.game.gamemodel.entity.*;
+import com.maze.game.gamemodel.entity.playrs.Human;
+import com.maze.game.gamemodel.entity.playrs.Monster;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,76 +25,90 @@ public class Fabric {
     FileReader reader;
     Integer[][] wallMap;
     List<Instruction> instructions;
-    Predicate<Point> humanInEqualPosition =t->{
+    Predicate<Point> humanInEqualPosition = t -> {
         return playField.getHuman().getPosition().equals(t);
 
     };
 
-    public void generateMap(){
+    public void generateMap() {
 
-        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map.bat")))
-        {
-            wallMap=(Integer[][])ois.readObject();
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map.bat"))) {
+            wallMap = (Integer[][]) ois.readObject();
 
-            for(int i=0;i<playField.getSize();i++){
-                for (int j=0;j<playField.getSize();j++){
-                    switch (wallMap[i][j]){
-                        case 0:{
-                            int a=0;
-                        };break;
-                        case 1 : {
-                            temp=new StaticObject(4, new Point(j,i),0,true,true);
-                            playField.addObjectToField((StaticObject)temp);
-                        };break;
-                        case 2 : {
-                            temp=new StaticObject(3, new Point(j,i),0,false,false);
-                            playField.addObjectToField((StaticObject)temp);
-                        };break;
-                        default:  break;
+            for (int i = 0; i < playField.getSize(); i++) {
+                for (int j = 0; j < playField.getSize(); j++) {
+                    switch (wallMap[i][j]) {
+                        case 0: {
+                            int a = 0;
+                        }
+                        ;
+                        break;
+                        case 1: {
+                            temp = new StaticObject(4, new Point(j, i), 0, true, true);
+                            playField.addObjectToField((StaticObject) temp);
+                        }
+                        ;
+                        break;
+                        case 2: {
+                            temp = new StaticObject(3, new Point(j, i), 0, false, false);
+                            playField.addObjectToField((StaticObject) temp);
+                        }
+                        ;
+                        break;
+                        default:
+                            break;
                     }
 
                 }
 
             }
 
-            instructions=(List<Instruction>)ois.readObject();
-            for(Instruction i:instructions){
-                switch (i.getType()){
-                    case 1 : {
-                        temp=new Human(1,i.p,0,5,5,playField);
-                        playField.addHuman((Human)temp);
-                };break;
-                    case 2 : {
-                        temp=new Monster(2,i.p,0,10,4,playField);
-                        playField.addMonster((Monster)temp);
-                    };break;
-                    case 5 : {
+            instructions = (List<Instruction>) ois.readObject();
+            for (Instruction i : instructions) {
+                switch (i.getType()) {
+                    case 1: {
+                        temp = new Human(1, i.p, 0, 5, 5, playField);
+                        playField.addHuman((Human) temp);
+                    }
+                    ;
+                    break;
+                    case 2: {
+                        temp = new Monster(2, i.p, 0, 10, 4, playField);
+                        playField.addMonster((Monster) temp);
+                    }
+                    ;
+                    break;
+                    case 5: {
 
-                        MazeEvent condition=new MazeEvent(0,i.eventPos,humanInEqualPosition);
-                        temp=new UsableObject(5,i.p,0,false,true,condition,i.angle);
+                        MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
+                        temp = new UsableObject(5, i.p, 0, false, true, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
-                        Consumer<MainController> effect= t->t.setChestFind(true);
-                        eventSystem.registrate(condition,effect);
+                        Consumer<MainController> effect = t -> t.setChestFind(true);
+                        eventSystem.registrate(condition, effect);
 
-                    };break;
-                    case 6 : {
+                    }
+                    ;
+                    break;
+                    case 6: {
 
 
-                        MazeEvent condition=new MazeEvent(0,i.eventPos,humanInEqualPosition);
-                        temp=new UsableObject(6,i.p,0,false,false,condition,i.angle);
+                        MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
+                        temp = new UsableObject(6, i.p, 0, false, false, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
-                        Consumer<MainController> effect= t->t.setExitFind(true);
-                        eventSystem.registrate(condition,effect);
-                    };break;
-                    default:  break;
+                        Consumer<MainController> effect = t -> t.setExitFind(true);
+                        eventSystem.registrate(condition, effect);
+                    }
+                    ;
+                    break;
+                    default:
+                        break;
                 }
 
 
             }
 
 
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
 
             System.out.println(ex.getMessage());
         }
