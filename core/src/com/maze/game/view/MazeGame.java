@@ -29,11 +29,10 @@ public class MazeGame extends Game {
 	Skin skin;
 	TextureAtlas buttonAtlas;
 	Texture img,img1;
-	int playSide=1;
-	OrthographicCamera cam;
-	MainController mainController;
+
+
 	SocketControl ourSideSocket;
-	boolean isGameActive=false;
+
 	@Override
 	public void create () {
 
@@ -54,42 +53,19 @@ public class MazeGame extends Game {
 
 
 		this.setScreen(mainMenuScreen);
-		while (!isGameActive){
-		System.out.println("wait");
-
-		}
-		System.out.println("game active");
-		mainController =new MainController(playSide,ourSideSocket);
 
 
 
-		cam = new OrthographicCamera(400, 400);
-		cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
-		cam.update();
+
+
 
 	}
 
-	public void setPlaySide(int playSide) {
-		this.playSide = playSide;
-	}
+
 
 	@Override
 	public void render () {
-		handleInput();
-		cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
-		cam.update();
-		batch.setProjectionMatrix(cam.combined);
-		Gdx.gl.glClearColor(1, 1, 1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//batch.setProjectionMatrix(cam.combined);
 
-		batch.begin();
-		if(mainController.isGameEnd()){
-
-		}else {
-			mainController.playFieldDraw(batch);
-		}
-		batch.end();
 	}
 	
 	@Override
@@ -99,43 +75,19 @@ public class MazeGame extends Game {
 		img.dispose();
 	}
 
-	public void notifyStart(int side){
-		this.playSide=side;
-		this.isGameActive=true;
-		System.out.println("notify side:"+side);
-	}
+
 
 
 	public void setGameActive(boolean gameActive) {
 		isGameActive = gameActive;
 	}
 
-	public MainController getMainController() {
-		return mainController;
+
+	public GameScreen createGameScreen(){
+
+
 	}
 
-	private void handleInput() {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 
-				ourSideSocket.moveRequest(-1,0,playSide);
-
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-			ourSideSocket.moveRequest(1,0,playSide);
-
-
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
-
-			ourSideSocket.moveRequest(0,-1,playSide);
-
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			ourSideSocket.moveRequest(0,1,playSide);
-
-
-		}
-
-		}
 	}
 
