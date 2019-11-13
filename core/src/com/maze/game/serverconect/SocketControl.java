@@ -29,6 +29,16 @@ public class SocketControl {
 
     }
 
+    public void joinGame(){
+
+
+    }
+
+    public void startGame(){
+
+
+    }
+
     public SocketControl(MazeGame game) {
         int port=8080;
 
