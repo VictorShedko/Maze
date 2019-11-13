@@ -35,15 +35,9 @@ public class RenderControl {
         File check = new File("check1.txt");
         try {
             FileWriter fl = new FileWriter(check);
-
             for (int i = 0; i < newVision.size(); i++) {
-
-
                 fl.write(newVision.get(i).getX() + " " + newVision.get(i).getY() + "\n");
-
-
             }
-
             fl.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,7 +50,7 @@ public class RenderControl {
         oldVision.addAll(newVision);
         temp.forEach(t -> playField.getObjectByKey(t).makeVisible());
         if (newVision.indexOf(playField.getHuman().getPosition()) != -1) {
-            playField.getHuman().makeVisible();
+            if(!playField.getHuman().isForceInvisible())playField.getHuman().makeVisible();
         }
         if (newVision.indexOf(playField.getMonster().getPosition()) != -1) {
             playField.getMonster().makeVisible();

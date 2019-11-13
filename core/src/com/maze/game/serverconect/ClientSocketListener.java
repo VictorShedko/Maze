@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 
 public class ClientSocketListener extends Thread{
     MazeGame game;
+    int id=-1;
     private  BufferedReader in;
     int end=0;
+    SocketControl parent;
     @Override
     public void run() {
         String str;
@@ -21,11 +23,22 @@ public class ClientSocketListener extends Thread{
 
                 str = in.readLine();
                 List<Integer> args= Arrays.stream(str.split(" ")).map(t->Integer.parseInt(t)).collect(Collectors.toList());
-                Message inMessage = new Message(args.get(0),args.get(1),args.get(2),args.get(3));
+                Message inMessage = new Message(args.get(0),args.get(1),args.get(2),args.get(3),args.get(4));
                 switch (inMessage.getCode()) {
+                    case 5:{
+                     if(id==-1) {
+                         id= inMessage.getAddress();
+                         System.out.println("My id is "+id);
+                     }
+                    };break;
                     case 0: {
-                        game.setGameActive(true);
-                        game.setPlaySide(inMessage.extend1);
+
+                        if(inMessage.getAddress()==id) {
+
+                            game.notifyStart(inMessage.getExtend1());
+                            System.out.println("start request"+inMessage.getAddress());
+
+                        }
                     }
                     ;
                     break;
@@ -35,7 +48,7 @@ public class ClientSocketListener extends Thread{
                     ;
                     break;
                     case 2: {
-                        game.getMainController().moveRequest(inMessage.extend1, inMessage.extend2, inMessage.extend3);
+                        game.getMainController().moveRequest(inMessage.getExtend1(), inMessage.getExtend2(), inMessage.getExtend3());
                     }
                     ;
                     break;
@@ -55,9 +68,9 @@ public class ClientSocketListener extends Thread{
         }
 
     }
-    public ClientSocketListener(MazeGame game, Socket socket, BufferedReader in) {
+    public ClientSocketListener(MazeGame game, SocketControl parent, BufferedReader in) {
         this.game=game;
-
+        this.parent=parent;
         this.in =in ;
         int a=0;
         start();

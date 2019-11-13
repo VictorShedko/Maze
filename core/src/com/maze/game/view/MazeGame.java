@@ -26,9 +26,10 @@ public class MazeGame extends ApplicationAdapter {
 
 
 		while (!isGameActive){
-
+		System.out.println("wait");
 
 		}
+		System.out.println("game active");
 		mainController =new MainController(playSide,ourSideSocket.getWriter());
 
 		batch = new SpriteBatch();
@@ -73,6 +74,7 @@ public class MazeGame extends ApplicationAdapter {
 	public void notifyStart(int side){
 		this.playSide=side;
 		this.isGameActive=true;
+		System.out.println("notify");
 	}
 
 
@@ -87,24 +89,23 @@ public class MazeGame extends ApplicationAdapter {
 	private void handleInput() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 
-				ourSideSocket.getWriter().sendMessage(new Message(2,-1,0,playSide));
+				ourSideSocket.moveRequest(-1,0,playSide);
 
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+			ourSideSocket.moveRequest(1,0,playSide);
 
-				ourSideSocket.getWriter().sendMessage(new Message(2,1,0,playSide));
 
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 
+			ourSideSocket.moveRequest(0,-1,playSide);
 
-				ourSideSocket.getWriter().sendMessage(new Message(2,0,-1,playSide));
 		}
 		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-			if(mainController.moveRequest(0,1,playSide)) {
-				cam.translate(0, 32, 0);
-				ourSideSocket.getWriter().sendMessage(new Message(2,0,1,playSide));
-			}
+			ourSideSocket.moveRequest(0,1,playSide);
+
+
 		}
 
 		}

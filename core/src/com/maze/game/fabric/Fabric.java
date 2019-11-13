@@ -5,6 +5,9 @@ import com.maze.game.gamemodel.controlers.MainController;
 import com.maze.game.gamemodel.entity.MazeEvent;
 import com.maze.game.gamemodel.PlayField;
 import com.maze.game.gamemodel.entity.*;
+import com.maze.game.gamemodel.entity.events.MazeEventEffeact;
+import com.maze.game.gamemodel.entity.events.PlayerStateEventEffeact;
+import com.maze.game.gamemodel.entity.events.SystemStateEventEffeact;
 import com.maze.game.gamemodel.entity.playrs.Human;
 import com.maze.game.gamemodel.entity.playrs.Monster;
 
@@ -25,6 +28,7 @@ public class Fabric {
     FileReader reader;
     Integer[][] wallMap;
     List<Instruction> instructions;
+    MainController mainController;
     Predicate<Point> humanInEqualPosition = t -> {
         return playField.getHuman().getPosition().equals(t);
 
@@ -69,6 +73,7 @@ public class Fabric {
                     case 1: {
                         temp = new Human(1, i.p, 0, 5, 5, playField);
                         playField.addHuman((Human) temp);
+                        ((Human) temp).refreshSteps();
                     }
                     ;
                     break;
@@ -84,7 +89,8 @@ public class Fabric {
                         temp = new UsableObject(5, i.p, 0, false, true, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
                         Consumer<MainController> effect = t -> t.setChestFind(true);
-                        eventSystem.registrate(condition, effect);
+                        SystemStateEventEffeact stateEffeact=new SystemStateEventEffeact(mainController,effect);
+                        eventSystem.registrate(condition,  stateEffeact);
 
                     }
                     ;
@@ -96,7 +102,20 @@ public class Fabric {
                         temp = new UsableObject(6, i.p, 0, false, false, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
                         Consumer<MainController> effect = t -> t.setExitFind(true);
-                        eventSystem.registrate(condition, effect);
+                        SystemStateEventEffeact stateEffeact=new SystemStateEventEffeact(mainController,effect);
+                        eventSystem.registrate(condition, stateEffeact);
+                    }
+                    ;
+                    break;
+                    case 7: {
+
+
+                        MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
+                        temp = new UsableObject(6, i.p, 0, false, false, condition, i.angle);
+                        playField.addObjectToField((StaticObject) temp);
+                        Consumer<Human> effect = t -> t.makeInvisible();
+                        PlayerStateEventEffeact stateEffeact=new PlayerStateEventEffeact(playField.getHuman(),effect);
+                        eventSystem.registrate(condition, stateEffeact);
                     }
                     ;
                     break;
@@ -116,8 +135,9 @@ public class Fabric {
 
     }
 
-    public Fabric(EventSystem eventSystem, PlayField playField) {
+    public Fabric(EventSystem eventSystem, PlayField playField,MainController mainController) {
         this.eventSystem = eventSystem;
         this.playField = playField;
+        this.mainController=mainController;
     }
 }

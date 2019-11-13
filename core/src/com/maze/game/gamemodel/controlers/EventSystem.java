@@ -1,22 +1,23 @@
 package com.maze.game.gamemodel.controlers;
 
 import com.maze.game.gamemodel.entity.MazeEvent;
+import com.maze.game.gamemodel.entity.events.MazeEventEffeact;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class EventSystem {
     MainController mainController;
-    Map<MazeEvent, Consumer<MainController>> events;
+    Map<MazeEvent, MazeEventEffeact> events;
 
-    public void registrate(MazeEvent event, Consumer<MainController> effect) {
+    public void registrate(MazeEvent event, MazeEventEffeact effect) {
+
         events.put(event, effect);
     }
 
     public void update() {
         events.forEach((t, h) -> {
-            if (t.check()) h.accept(mainController);
+            if (t.check()) h.update();
         });
 
     }

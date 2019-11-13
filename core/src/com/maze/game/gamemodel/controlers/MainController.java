@@ -9,6 +9,7 @@ import com.maze.game.fabric.MapCreator;
 import com.maze.game.gamemodel.renderLogic.RenderControl;
 import com.maze.game.serverconect.ClientSocketWriter;
 import com.maze.game.serverconect.Message;
+import com.maze.game.serverconect.SocketControl;
 
 import java.util.Timer;
 
@@ -17,7 +18,7 @@ public class MainController {
     private boolean isChestFind;
     private boolean isExitFind;
     private boolean gameEnd = false;
-    ClientSocketWriter socket;
+    SocketControl socket;
     int side;//0 human 1 monster
     PlayField playField;
     EventSystem eventSystem;
@@ -64,7 +65,7 @@ public class MainController {
                     this.gameEnd=true;
                 }
                 changeTurn();
-                socket.sendMessage(new Message(1, 0, 0, 0));
+                socket.changeTurnReqest();
 
             }
         }
@@ -72,10 +73,10 @@ public class MainController {
         if (ret) {
             eventSystem.update();
             if (isChestFind && isExitFind) {
-                socket.sendMessage(new Message(4, 0, 0, 0));
+                socket.getWriter().sendMessage(new Message(4, 0, 0, 0,0));
             }
             if (playField.getMonster().isCaught()) {
-                socket.sendMessage(new Message(4, 1, 0, 0));
+                socket.getWriter().sendMessage(new Message(4, 1, 0, 0,0));
             }
             return true;
         } else {
@@ -101,7 +102,7 @@ public class MainController {
         TextureStorage textureStorage = new TextureStorage(side);
         playField = new PlayField(21, textureStorage);
         eventSystem = new EventSystem(this);
-        fabric = new Fabric(eventSystem, playField);
+        fabric = new Fabric(eventSystem, playField,this);
         fabric.generateMap();
         renderControl = new RenderControl(playField);
         //  playField.see();
