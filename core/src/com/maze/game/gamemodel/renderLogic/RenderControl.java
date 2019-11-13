@@ -108,20 +108,6 @@ public class RenderControl {
             rayTrack.add(in);
         }
         rayTrack.sort((o1, o2) -> o2.compareTo(o1));
-        File chack = new File("check3.txt");
-
-        try {
-            FileWriter fl = new FileWriter(chack, true);
-
-            for (int i = 0; i < rayTrack.size(); i++) {
-
-                fl.write(rayTrack.get(i).getX() + " " + rayTrack.get(i).getY() + "   ");
-            }
-            fl.write("\n");
-            fl.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         for (int i = rayTrack.size() - 1; i >= 0; i--) {
             Double x = rayTrack.get(i).getX();
             Double y = rayTrack.get(i).getY();
@@ -148,24 +134,7 @@ public class RenderControl {
                 .stream()
                 .forEach(t ->
                         crystallineMatrix[t.getPosition().getX()][t.getPosition().getY()] = t.isCrystallineAsInt());
-        File chack = new File("check.txt");
 
-        try {
-            FileWriter fl = new FileWriter(chack);
-
-            for (int i = 0; i < 21; i++) {
-
-                for (int j = 0; j < 21; j++) {
-                    fl.write(crystallineMatrix[i][j].intValue() + '0');
-
-                }
-                fl.write("\n");
-            }
-            fl.write("suka");
-            fl.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
     }
