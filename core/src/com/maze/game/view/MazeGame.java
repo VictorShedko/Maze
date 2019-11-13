@@ -30,7 +30,7 @@ public class MazeGame extends ApplicationAdapter {
 
 		}
 		System.out.println("game active");
-		mainController =new MainController(playSide,ourSideSocket.getWriter());
+		mainController =new MainController(playSide,ourSideSocket);
 
 		batch = new SpriteBatch();
 
@@ -48,6 +48,7 @@ public class MazeGame extends ApplicationAdapter {
 	@Override
 	public void render () {
 		handleInput();
+		cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
 		cam.update();
 		batch.setProjectionMatrix(cam.combined);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -74,7 +75,7 @@ public class MazeGame extends ApplicationAdapter {
 	public void notifyStart(int side){
 		this.playSide=side;
 		this.isGameActive=true;
-		System.out.println("notify");
+		System.out.println("notify side:"+side);
 	}
 
 

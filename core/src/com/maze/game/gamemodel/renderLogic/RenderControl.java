@@ -19,10 +19,11 @@ public class RenderControl {
     PlayField playField;
     Batch batch;
 
-    public void reRender(int side, Batch batch) {
+    public void reRender(int side) {
         Human player;
         if (side == 0) {
             player = playField.getHuman();
+
         } else {
             player = playField.getMonster();
         }
@@ -51,10 +52,16 @@ public class RenderControl {
         temp.forEach(t -> playField.getObjectByKey(t).makeVisible());
         if (newVision.indexOf(playField.getHuman().getPosition()) != -1) {
             if(!playField.getHuman().isForceInvisible())playField.getHuman().makeVisible();
+        }else {
+            playField.getHuman().makeInvisible();
         }
         if (newVision.indexOf(playField.getMonster().getPosition()) != -1) {
             playField.getMonster().makeVisible();
+        }else {
+            playField.getMonster().makeInvisible();
         }
+
+        player.makeVisible();
     }
 
     private int sign(double x) {

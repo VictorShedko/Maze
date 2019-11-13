@@ -24,6 +24,7 @@ public class ClientSocketListener extends Thread{
                 str = in.readLine();
                 List<Integer> args= Arrays.stream(str.split(" ")).map(t->Integer.parseInt(t)).collect(Collectors.toList());
                 Message inMessage = new Message(args.get(0),args.get(1),args.get(2),args.get(3),args.get(4));
+                System.out.println("Message is:"+inMessage.getCode()+inMessage.getExtend1()+inMessage.getExtend2()+inMessage.getExtend3()+inMessage.getAddress());
                 switch (inMessage.getCode()) {
                     case 5:{
                      if(id==-1) {
@@ -43,12 +44,17 @@ public class ClientSocketListener extends Thread{
                     ;
                     break;
                     case 1: {
-                        game.getMainController().changeTurn();
+                        if(inMessage.getAddress()==id) {
+                            System.out.println("change");
+                            game.getMainController().changeTurn();
+                        }
                     }
                     ;
                     break;
                     case 2: {
-                        game.getMainController().moveRequest(inMessage.getExtend1(), inMessage.getExtend2(), inMessage.getExtend3());
+                        if(inMessage.getAddress()==id) {
+                            game.getMainController().moveRequest(inMessage.getExtend1(), inMessage.getExtend2(), inMessage.getExtend3());
+                        }
                     }
                     ;
                     break;

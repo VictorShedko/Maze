@@ -34,7 +34,13 @@ public class Fabric {
 
     };
 
-    public void generateMap() {
+    public void generateMap(int side) {
+        int startVisible=0;
+        int startVisibleUsable=0;
+        if(side==1){
+            startVisible=1;
+            startVisibleUsable=0;
+        }
 
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("map.bat"))) {
             wallMap = (Integer[][]) ois.readObject();
@@ -48,13 +54,13 @@ public class Fabric {
                         ;
                         break;
                         case 1: {
-                            temp = new StaticObject(4, new Point(j, i), 0, true, true);
+                            temp = new StaticObject(4, new Point(j, i), startVisible, true, true);
                             playField.addObjectToField((StaticObject) temp);
                         }
                         ;
                         break;
                         case 2: {
-                            temp = new StaticObject(3, new Point(j, i), 0, false, false);
+                            temp = new StaticObject(3, new Point(j, i), startVisible, false, false);
                             playField.addObjectToField((StaticObject) temp);
                         }
                         ;
@@ -86,7 +92,7 @@ public class Fabric {
                     case 5: {
 
                         MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
-                        temp = new UsableObject(5, i.p, 0, false, true, condition, i.angle);
+                        temp = new UsableObject(5, i.p, startVisibleUsable, false, true, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
                         Consumer<MainController> effect = t -> t.setChestFind(true);
                         SystemStateEventEffeact stateEffeact=new SystemStateEventEffeact(mainController,effect);
@@ -99,7 +105,7 @@ public class Fabric {
 
 
                         MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
-                        temp = new UsableObject(6, i.p, 0, false, false, condition, i.angle);
+                        temp = new UsableObject(6, i.p, startVisibleUsable, false, false, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
                         Consumer<MainController> effect = t -> t.setExitFind(true);
                         SystemStateEventEffeact stateEffeact=new SystemStateEventEffeact(mainController,effect);
@@ -111,7 +117,7 @@ public class Fabric {
 
 
                         MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
-                        temp = new UsableObject(6, i.p, 0, false, false, condition, i.angle);
+                        temp = new UsableObject(6, i.p, startVisibleUsable, false, false, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
                         Consumer<Human> effect = t -> t.makeInvisible();
                         PlayerStateEventEffeact stateEffeact=new PlayerStateEventEffeact(playField.getHuman(),effect);

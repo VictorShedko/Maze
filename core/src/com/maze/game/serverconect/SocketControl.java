@@ -21,8 +21,8 @@ public class SocketControl {
     public ClientSocketWriter getWriter() {
         return writer;
     }
-    public void changeTurnReqest(){
-        writer.sendMessage(new Message(1, 0, 0, 0,0));
+    public void changeTurnRequest(int turn){
+        writer.sendMessage(new Message(1, turn, 0, 0,3));
     }
     public void moveRequest(int xShift,int yShift,int side){
         writer.sendMessage(new Message(2,xShift,yShift,side,3));
@@ -37,7 +37,7 @@ public class SocketControl {
             clientSocket = new Socket("localhost",port);
 
 
-///bolno
+
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         this.listener=new ClientSocketListener(game,this,in);
