@@ -21,7 +21,6 @@ public class MainMenuScreen implements Screen {
     TextButton joinGame;
     OrthographicCamera camera;
     Skin skin = new Skin();
-    Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
 
 
     public MainMenuScreen(final MazeGame game) {
@@ -31,32 +30,42 @@ public class MainMenuScreen implements Screen {
         camera.setToOrtho(false, 800, 480);
 
 
-
-
-        exit=new TextButton("exit",game.textButtonStyle);
+        exit = new TextButton("exit", game.textButtonStyle);
+        exit.setSize(200, 100);
+        exit.setPosition(100, 0);
         game.stage.addActor(exit);
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                    Gdx.app.exit();
             }
         });
-        startGame=new TextButton("exit",game.textButtonStyle);
+
+
+        startGame = new TextButton("start game", game.textButtonStyle);
+        startGame.setSize(200, 100);
+        startGame.setPosition(100, 200);
         game.stage.addActor(startGame);
         startGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.ourSideSocket.startGame();
-              game.setScreen(game.gameScreen);
+                // game.ourSideSocket.startGame();
+                //   game.setScreen(game.gameScreen);
+                System.out.println("lol");
             }
         });
-        joinGame=new TextButton("exit",game.textButtonStyle);
+
+
+        joinGame = new TextButton("join game", game.textButtonStyle);
+        joinGame.setSize(200, 100);
+        joinGame.setPosition(100, 400);
         game.stage.addActor(joinGame);
         joinGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.ourSideSocket.joinGame();
                 game.setScreen(game.gameScreen);
+
             }
         });
     }
@@ -68,20 +77,18 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+
+        Gdx.gl.glClearColor(1, 1, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_WRITEMASK);
-
-
 
 
         game.batch.begin();
         game.stage.draw();
         game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            game.setScreen(game.createGameScreen());
+        if (joinGame.isChecked()) {
             dispose();
         }
+
     }
 
     @Override

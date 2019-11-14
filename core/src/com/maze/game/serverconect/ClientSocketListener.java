@@ -1,5 +1,6 @@
 package com.maze.game.serverconect;
 
+import com.maze.game.view.GameScreen;
 import com.maze.game.view.MazeGame;
 
 import java.io.BufferedReader;
@@ -36,7 +37,7 @@ public class ClientSocketListener extends Thread{
 
                         if(inMessage.getAddress()==id) {
 
-                            game.notifyStart(inMessage.getExtend1());
+                            game.getGameScreen().notifyStart(inMessage.getExtend1());
                             System.out.println("start request"+inMessage.getAddress());
 
                         }
@@ -46,21 +47,21 @@ public class ClientSocketListener extends Thread{
                     case 1: {
                         if(inMessage.getAddress()==id) {
                             System.out.println("change");
-                            game.getMainController().changeTurn();
+                            game.getGameScreen().getMainController().changeTurn();
                         }
                     }
                     ;
                     break;
                     case 2: {
                         if(inMessage.getAddress()==id) {
-                            game.getMainController().moveRequest(inMessage.getExtend1(), inMessage.getExtend2(), inMessage.getExtend3());
+                            game.getGameScreen().getMainController().moveRequest(inMessage.getExtend1(), inMessage.getExtend2(), inMessage.getExtend3());
                         }
                     }
                     ;
                     break;
 
                     case 4: {
-                        game.setGameActive(false);
+                        game.getGameScreen().setGameActive(false);
                     }
                     ;
                     break;

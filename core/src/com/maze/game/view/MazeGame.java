@@ -19,7 +19,7 @@ import com.maze.game.serverconect.Message;
 import com.maze.game.serverconect.SocketControl;
 
 public class MazeGame extends Game {
-	MainMenuScreen mainMenuScreen=new MainMenuScreen(this);
+	MainMenuScreen mainMenuScreen;
 	GameScreen gameScreen;
 	EndGameScreen endGameScreen;
 	Stage stage;
@@ -28,7 +28,7 @@ public class MazeGame extends Game {
 	BitmapFont font;
 	Skin skin;
 	TextureAtlas buttonAtlas;
-	Texture img,img1;
+
 
 
 	SocketControl ourSideSocket;
@@ -37,21 +37,18 @@ public class MazeGame extends Game {
 	public void create () {
 
 
-		//ourSideSocket=new SocketControl(this);
+		ourSideSocket=new SocketControl(this);
 		batch = new SpriteBatch();
 		stage=new Stage(new ScreenViewport());
 		Gdx.input.setInputProcessor(stage);
 		font = new BitmapFont();
 		skin = new Skin();
-		buttonAtlas = new TextureAtlas(Gdx.files.internal("buttons/buttons.pack"));
-		skin.addRegions(buttonAtlas);
+
 		textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.font = font;
-		textButtonStyle.up = skin.getDrawable("up-button");
-		textButtonStyle.down = skin.getDrawable("down-button");
-		textButtonStyle.checked = skin.getDrawable("checked-button");
 
 
+		mainMenuScreen=new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
 
 
@@ -65,26 +62,31 @@ public class MazeGame extends Game {
 
 	@Override
 	public void render () {
-
+		super.render();
 	}
 	
 	@Override
 	public void dispose () {
 
 		batch.dispose();
-		img.dispose();
+
 	}
 
 
-
-
-	public void setGameActive(boolean gameActive) {
-		isGameActive = gameActive;
+	public MainMenuScreen getMainMenuScreen() {
+		return mainMenuScreen;
 	}
 
+	public GameScreen getGameScreen() {
+		return gameScreen;
+	}
 
-	public GameScreen createGameScreen(){
+	public EndGameScreen getEndGameScreen() {
+		return endGameScreen;
+	}
 
+	public void setGameScreen(){
+    gameScreen=new GameScreen(this);
 
 	}
 

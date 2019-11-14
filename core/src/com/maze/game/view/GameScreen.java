@@ -94,12 +94,15 @@ public class GameScreen implements Screen {
         this.isGameActive=true;
         System.out.println("notify side:"+side);
     }
+    public void setGameActive(boolean gameActive) {
+        isGameActive = gameActive;
+    }
+    public MazeGame getRootGame(){
+        return game;
+    }
+
     public GameScreen(MazeGame game) {
         this.game = game;
-        while (!isGameActive){
-            System.out.println("wait");
-
-        }
         System.out.println("game active");
         mainController =new MainController(playSide,game.ourSideSocket);
         cam = new OrthographicCamera(400, 400);

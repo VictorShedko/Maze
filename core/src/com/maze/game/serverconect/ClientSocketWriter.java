@@ -1,5 +1,6 @@
 package com.maze.game.serverconect;
 
+import com.maze.game.view.GameScreen;
 import com.maze.game.view.MazeGame;
 
 import java.io.*;
@@ -9,12 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ClientSocketWriter extends Thread {
-    private  Socket clientSocket;
+    private Socket clientSocket;
 
     MazeGame game;
-    private  BufferedReader in;
-    private  BufferedWriter out;
-    int end=0;
+    private BufferedReader in;
+    private BufferedWriter out;
+    int end = 0;
     String str;
 
     public void setEnd(int end) {
@@ -22,20 +23,19 @@ public class ClientSocketWriter extends Thread {
     }
 
 
-    public void sendMessage(Message ms)
-        {
-            try {
-                out.write(ms.getCode()+" "+ms.getExtend1()+" "+ms.getExtend2()+" "+ms.getExtend3()+" "+ms.getAddress()+"\n");
-                out.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    public void sendMessage(Message ms) {
+        try {
+            out.write(ms.getCode() + " " + ms.getExtend1() + " " + ms.getExtend2() + " " + ms.getExtend3() + " " + ms.getAddress() + "\n");
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-    public ClientSocketWriter(MazeGame game,Socket socket,BufferedWriter out) {
-        this.game=game;
+    }
 
-            this.out =out ;
-            int a=0;
+    public ClientSocketWriter(MazeGame game, Socket socket, BufferedWriter out) {
+        this.game = game;
+        this.out = out;
+        int a = 0;
 
     }
 }

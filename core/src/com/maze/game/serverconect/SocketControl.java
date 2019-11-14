@@ -1,5 +1,6 @@
 package com.maze.game.serverconect;
 
+import com.maze.game.view.GameScreen;
 import com.maze.game.view.MazeGame;
 
 import java.io.*;
