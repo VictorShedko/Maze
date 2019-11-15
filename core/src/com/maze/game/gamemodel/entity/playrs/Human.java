@@ -9,7 +9,7 @@ public class Human extends GameObject {
     protected int stepsLeft;
     protected int fieldOfVisionSize;
     protected PlayField parentField;
-    boolean forceInvisible=false;
+    protected boolean forceInvisible=false;
     @Override
     public void makeVisible() {
         this.status = 2;

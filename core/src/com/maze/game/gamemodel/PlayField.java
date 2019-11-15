@@ -72,24 +72,4 @@ public class PlayField {
 
     }
 
-    public void see(){
-        File check=new File("check1.txt");
-        try {
-            FileWriter fl = new FileWriter(check);
-
-            for (int i = 0; i < 20; i++) {
-
-                for (int j = 0; j < 20; j++) {
-                   fl.write(gameObjects.get(new Point(i, j)).getObjectId() + '0');
-
-                }
-                fl.write("\n");
-            }
-
-            fl.flush();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

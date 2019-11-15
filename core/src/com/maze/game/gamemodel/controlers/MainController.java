@@ -97,6 +97,10 @@ public class MainController {
         playField.refreshSteps(turn);
     }
 
+    public void setGameEnd(boolean gameEnd) {
+        this.gameEnd = gameEnd;
+    }
+
     public MainController(int side, SocketControl socket) {
         this.side = side;
         this.socket = socket;

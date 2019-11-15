@@ -5,8 +5,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -21,7 +23,7 @@ public class MainMenuScreen implements Screen {
     TextButton joinGame;
     OrthographicCamera camera;
     Skin skin = new Skin();
-
+    Texture mainMenuScreenImage=new Texture("menuimage\\mainscreen.jpg");
 
     public MainMenuScreen(final MazeGame game) {
 
@@ -49,9 +51,8 @@ public class MainMenuScreen implements Screen {
         startGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                // game.ourSideSocket.startGame();
-                //   game.setScreen(game.gameScreen);
-                System.out.println("lol");
+                game.ourSideSocket.startGame();
+
             }
         });
 
@@ -64,7 +65,6 @@ public class MainMenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.ourSideSocket.joinGame();
-                game.setScreen(game.gameScreen);
 
             }
         });
@@ -81,13 +81,12 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(1, 1, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_WRITEMASK);
 
-
+        camera.update();
         game.batch.begin();
         game.stage.draw();
+        game.batch.draw(mainMenuScreenImage,0,0);
         game.batch.end();
-        if (joinGame.isChecked()) {
-            dispose();
-        }
+
 
     }
 

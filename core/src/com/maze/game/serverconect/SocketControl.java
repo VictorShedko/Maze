@@ -14,6 +14,7 @@ public class SocketControl {
     private  BufferedWriter out;
     private ClientSocketListener listener;
     private ClientSocketWriter writer;
+    private boolean choiceMaid = false;
 
     public ClientSocketListener getListener() {
         return listener;
@@ -31,15 +32,29 @@ public class SocketControl {
     }
 
     public void joinGame(){
+        if(choiceMaid==false) {
+            writer.sendMessage(new Message(7, 0, 0, 0, 3));
+            choiceMaid=true;
+        }
 
 
     }
 
     public void startGame(){
-
+        if(choiceMaid==false) {
+        writer.sendMessage(new Message(8,0,0,0,3));
+            choiceMaid=true;
+        }
 
     }
 
+    public void replayRequest(){
+        writer.sendMessage(new Message(9,0,0,0,3));
+    }
+
+    public void replayReject(){
+        writer.sendMessage(new Message(10,0,0,0,3));
+    }
     public SocketControl(MazeGame game) {
         int port=8080;
 
@@ -53,7 +68,6 @@ public class SocketControl {
         out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
         this.listener=new ClientSocketListener(game,this,in);
         this.writer=new ClientSocketWriter(game,clientSocket,out);
-        //this.writer.sendMessage(new Message(0,0,0,0,2));
         int a=0;
         } catch (IOException e) {
             e.printStackTrace();

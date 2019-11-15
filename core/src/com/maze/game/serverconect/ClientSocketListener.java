@@ -36,8 +36,7 @@ public class ClientSocketListener extends Thread{
                     case 0: {
 
                         if(inMessage.getAddress()==id) {
-
-                            game.getGameScreen().notifyStart(inMessage.getExtend1());
+                            game.setGameScreen(inMessage.getExtend1());
                             System.out.println("start request"+inMessage.getAddress());
 
                         }
@@ -62,6 +61,20 @@ public class ClientSocketListener extends Thread{
 
                     case 4: {
                         game.getGameScreen().setGameActive(false);
+                    }
+
+                    break;
+                    case 9: {
+                        if(inMessage.getAddress()==id) {
+                            game.getEndGameScreen().replayRejected();
+                        }
+                    }
+                    ;
+                    break;
+                    case 10: {
+                        if(inMessage.getAddress()==id) {
+                            game.setGameScreen(inMessage.getExtend1());
+                        }
                     }
                     ;
                     break;

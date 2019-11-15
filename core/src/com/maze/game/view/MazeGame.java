@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -85,9 +86,10 @@ public class MazeGame extends Game {
 		return endGameScreen;
 	}
 
-	public void setGameScreen(){
-    gameScreen=new GameScreen(this);
-
+	public void setGameScreen(int side){
+    gameScreen=new GameScreen(this,side,ourSideSocket);
+	this.setScreen(gameScreen);
+	gameScreen.setGameActive(true);
 	}
 
 

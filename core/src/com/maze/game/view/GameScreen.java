@@ -6,11 +6,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.maze.game.gamemodel.controlers.MainController;
+import com.maze.game.serverconect.SocketControl;
 
 public class GameScreen implements Screen {
     final MazeGame game;
     MainController mainController;
     OrthographicCamera cam;
+    SocketControl socketControl;
     int playSide=1;
     boolean isGameActive=false;
     @Override
@@ -21,7 +23,17 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         handleInput();
-        cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
+        if(isGameActive&&mainController==null){
+            mainController=new MainController(playSide,socketControl);
+            isGameActive=true;
+        }
+        if(isGameActive){
+            cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
+            if(mainController.isGameEnd()){
+                game.setScreen(new EndGameScreen(game));
+            }
+        }
+        mainController.setGameEnd(true);
         cam.update();
         game.batch.setProjectionMatrix(cam.combined);
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -29,12 +41,11 @@ public class GameScreen implements Screen {
 
 
         game.batch.begin();
-        if(mainController.isGameEnd()){
-
-        }else {
+        if(!mainController.isGameEnd()){
             mainController.playFieldDraw(game.batch);
         }
         game.batch.end();
+
     }
 
     @Override
@@ -63,24 +74,30 @@ public class GameScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
-
-            game.ourSideSocket.moveRequest(-1,0,playSide);
-
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-            game.ourSideSocket.moveRequest(1,0,playSide);
+        try {
 
 
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 
-            game.ourSideSocket.moveRequest(0,-1,playSide);
+                game.ourSideSocket.moveRequest(-1, 0, playSide);
 
-        }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-            game.ourSideSocket.moveRequest(0,1,playSide);
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+                game.ourSideSocket.moveRequest(1, 0, playSide);
 
+
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
+
+                game.ourSideSocket.moveRequest(0, -1, playSide);
+
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+                game.ourSideSocket.moveRequest(0, 1, playSide);
+
+
+            }
+        }catch (Exception ex){
 
         }
 
@@ -89,24 +106,24 @@ public class GameScreen implements Screen {
     public MainController getMainController() {
         return mainController;
     }
-    public void notifyStart(int side){
-        this.playSide=side;
-        this.isGameActive=true;
-        System.out.println("notify side:"+side);
-    }
+
     public void setGameActive(boolean gameActive) {
         isGameActive = gameActive;
     }
-    public MazeGame getRootGame(){
-        return game;
+
+    public void setup(){
+
+        mainController=new MainController(playSide,socketControl);
     }
 
-    public GameScreen(MazeGame game) {
+
+    public GameScreen(MazeGame game, int side, SocketControl socketControl) {
         this.game = game;
+        this.socketControl=socketControl;
         System.out.println("game active");
-        mainController =new MainController(playSide,game.ourSideSocket);
+        this.playSide=side;
         cam = new OrthographicCamera(400, 400);
-        cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
+        cam.position.set(0, 0, 0);
         cam.update();
     }
 }

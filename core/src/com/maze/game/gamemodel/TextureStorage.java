@@ -7,18 +7,18 @@ import java.util.Map;
 
 public class TextureStorage {
     Texture[][] textureBank = new Texture[10][10];
-    Texture fogOfWar = new Texture("FogOfWar.png");
-    Texture wallDark = new Texture("WallLight.png");
-    Texture wallLight = new Texture("WallLight.png");
-    Texture floorDark = new Texture("BasicFloor.png");
-    Texture floorLight = new Texture("BasicFloor.png");
-    Texture chestLight = new Texture("chest.png");
-    Texture chestDark = new Texture("chest.png");
-    Texture exitLight = new Texture("exit.png");
-    Texture exitDark = new Texture("exit.png");
-    Texture human = new Texture("Human.png");
-    Texture empty = new Texture("Empty.png");
-    Texture monster = new Texture("Monster.png");
+    Texture fogOfWar = new Texture("gametexture\\FogOfWar.png");
+    Texture wallDark = new Texture("gametexture\\WallLight.png");
+    Texture wallLight = new Texture("gametexture\\WallLight.png");
+    Texture floorDark = new Texture("gametexture\\BasicFloor.png");
+    Texture floorLight = new Texture("gametexture\\BasicFloor.png");
+    Texture chestLight = new Texture("gametexture\\chest.png");
+    Texture chestDark = new Texture("gametexture\\chest.png");
+    Texture exitLight = new Texture("gametexture\\exit.png");
+    Texture exitDark = new Texture("gametexture\\exit.png");
+    Texture human = new Texture("gametexture\\Human.png");
+    Texture empty = new Texture("gametexture\\Empty.png");
+    Texture monster = new Texture("gametexture\\Monster.png");
 
     public TextureStorage(int gameType) {
 
@@ -73,7 +73,7 @@ public class TextureStorage {
 
     }
 
-    Texture img = new Texture("BasicFloor.png");
+
 
     public Texture getTextureBank(int type, int status) {
         return textureBank[type][status];
