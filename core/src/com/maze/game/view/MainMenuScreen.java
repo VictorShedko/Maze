@@ -84,6 +84,7 @@ public class MainMenuScreen implements Screen {
     public void show() {
 
         Gdx.input.setInputProcessor(mainStage);
+        if(game.isConnected())game.ourSideSocket.refresh();
     }
 
     @Override

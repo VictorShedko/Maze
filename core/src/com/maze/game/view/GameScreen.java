@@ -5,11 +5,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.maze.game.gamemodel.controlers.MainController;
 import com.maze.game.serverconect.SocketControl;
 
 public class GameScreen implements Screen {
     final MazeGame game;
+    Stage gameStage;
     MainController mainController;
     OrthographicCamera cam;
     SocketControl socketControl;
@@ -17,7 +19,7 @@ public class GameScreen implements Screen {
     boolean isGameActive=false;
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(gameStage);
     }
 
     @Override

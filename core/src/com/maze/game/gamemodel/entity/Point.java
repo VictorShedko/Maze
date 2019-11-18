@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Point implements Serializable {
-    private int x, y;
+    private int x;
+    private int y;
 
     @Override
     public boolean equals(Object o) {

@@ -13,17 +13,19 @@ import java.util.Timer;
 
 
 public class MainController {
+    private static final int CELL_SIZE=32;
     TextureStorage textureStorage;
     private boolean isChestFind;
     private boolean isExitFind;
     private boolean gameEnd = false;
+    private Human protagonist;
     SocketControl socket;
     private int side;//0 human 1 monster
     PlayField playField;
     EventSystem eventSystem;
     Factory factory;
     Timer timeToAutoTurnChange = new Timer();
-    TimerTaskChangeTurn t = new TimerTaskChangeTurn(this);
+
     RenderControl renderControl;
     int turn;//0 human 1 monster
 
@@ -55,7 +57,7 @@ public class MainController {
     }
     public boolean moveRequest(int xShift, int yShift, int side) {
         Human player;
-        System.out.println("turn: "+turn+" side: "+side);
+        //System.err.println("turn: "+turn+" side: "+side);
         boolean ret = false;
         if (turn == side) {
             if (side == 0) {
@@ -67,7 +69,7 @@ public class MainController {
             if (player.getStepsLeft() == 0) {
 
 
-                System.out.println("req side:"+side+" turn:"+turn);
+                //System.out.println("req side:"+side+" turn:"+turn);
                 socket.sendChangeTurnRequestMessage(turn);
 
             }
@@ -100,12 +102,16 @@ public class MainController {
     public void draw(Batch batch) {
         renderControl.reRender(side);
         playFieldDraw(batch);
-        batch.draw(textureStorage.getMoveEnable(),200,200);
+        if(turn==side) {
+            batch.draw(textureStorage.getMoveEnable(), (protagonist.getPosition().getX() + 4) * CELL_SIZE, (protagonist.getPosition().getY() + 5) * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+        }
     }
 
-    public void changeTurn() {
-        turn = turn == 1 ? 0 : 1;
-        playField.refreshSteps(turn);
+    public void changeTurn(int newTurn) {
+        if(newTurn!=turn) {
+            turn=newTurn;
+            playField.refreshSteps(turn);
+        }
     }
 
     public void setGameEnd(boolean gameEnd) {
@@ -115,15 +121,19 @@ public class MainController {
     public MainController(int side, SocketControl socket) {
         this.side = side;
         this.socket = socket;
-        System.out.println("create side:"+side);
+       // System.out.println("create side:"+side);
         MapCreator.createMap("map.bat");
         textureStorage = new TextureStorage(side);
         playField = new PlayField(21, textureStorage);
         eventSystem = new EventSystem(this);
         factory = new Factory(eventSystem, playField,this);
         factory.generateMap(side);
-        renderControl = new RenderControl(playField);
-        //  playField.see();
+        renderControl = new RenderControl(playField);//  playField.see();
+        if(side==0){
+        protagonist=playField.getHuman();
+        }else {
+            protagonist=playField.getMonster();
+        }
 
     }
 }

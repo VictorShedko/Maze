@@ -5,8 +5,8 @@ import com.maze.game.gamemodel.controlers.MainController;
 import java.util.function.Consumer;
 
 public class SystemStateEventEffeact implements MazeEventEffeact {
-    MainController mainController;
-    Consumer<MainController> effect;
+    private MainController mainController;
+    private Consumer<MainController> effect;
     @Override
     public void update() {
         effect.accept(mainController);

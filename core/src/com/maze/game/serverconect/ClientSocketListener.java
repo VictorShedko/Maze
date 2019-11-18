@@ -46,7 +46,7 @@ public class ClientSocketListener extends Thread{
                     case 1: {
                         if(inMessage.getAddress()==id) {
                             System.out.println("change");
-                            game.getGameScreen().getMainController().changeTurn();
+                            game.getGameScreen().getMainController().changeTurn(inMessage.getExtend1());
                         }
                     }
                     ;

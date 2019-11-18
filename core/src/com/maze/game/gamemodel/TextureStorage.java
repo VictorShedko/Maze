@@ -2,8 +2,6 @@ package com.maze.game.gamemodel;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class TextureStorage {
     Texture[][] textureBank = new Texture[10][10];
@@ -20,7 +18,7 @@ public class TextureStorage {
     Texture human = new Texture("gametexture\\Human.png");
     Texture empty = new Texture("gametexture\\Empty.png");
     Texture monster = new Texture("gametexture\\Monster.png");
-
+    Texture cupboard = new Texture("gametexture\\EmptyChest.png");
     Texture moveEnable = new Texture("gametexture\\MoveEnableIcon.png");
     public TextureStorage(int gameType) {
 
@@ -45,6 +43,10 @@ public class TextureStorage {
             textureBank[6][0] = fogOfWar;
             textureBank[6][1] = exitDark;
             textureBank[6][2] = exitLight;
+
+            textureBank[7][0] = fogOfWar;
+            textureBank[7][1] = cupboard;
+            textureBank[7][2] = cupboard;
 
         }else {
             textureBank[1][0]=empty;
@@ -71,6 +73,9 @@ public class TextureStorage {
             textureBank[6][1]=exitDark;
             textureBank[6][2]=exitLight;
 
+            textureBank[7][0]=cupboard;
+            textureBank[7][1]=cupboard;
+            textureBank[7][2]=cupboard;
         }
 
     }

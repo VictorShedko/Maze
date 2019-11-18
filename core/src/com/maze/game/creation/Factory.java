@@ -48,21 +48,18 @@ public class Factory {
                 for (int j = 0; j < playField.getSize(); j++) {
                     switch (wallMap[i][j]) {
                         case 0: {
-                            int a = 0;
+
                         }
-                        ;
                         break;
                         case 1: {
                             temp = new StaticObject(4, new Point(j, i), startVisible, true, true);
                             playField.addObjectToField((StaticObject) temp);
                         }
-                        ;
                         break;
                         case 2: {
                             temp = new StaticObject(3, new Point(j, i), startVisible, false, false);
                             playField.addObjectToField((StaticObject) temp);
                         }
-                        ;
                         break;
                         default:
                             break;
@@ -116,13 +113,12 @@ public class Factory {
 
 
                         MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
-                        temp = new UsableObject(6, i.p, startVisibleUsable, false, false, condition, i.angle);
+                        temp = new UsableObject(7, i.p, startVisibleUsable, true, true, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
-                        Consumer<Human> effect = t -> t.makeForceInvisible();
+                        Consumer<Human> effect = Human::makeForceInvisible;
                         PlayerStateEventEffeact stateEffeact=new PlayerStateEventEffeact(playField.getHuman(),effect);
                         eventSystem.registrate(condition, stateEffeact);
                     }
-                    ;
                     break;
                     default:
                         break;
@@ -134,7 +130,7 @@ public class Factory {
 
         } catch (Exception ex) {
 
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
 
 

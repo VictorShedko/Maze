@@ -6,9 +6,7 @@ import com.maze.game.gamemodel.entity.playrs.Monster;
 import com.maze.game.gamemodel.entity.Point;
 import com.maze.game.gamemodel.entity.StaticObject;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +15,7 @@ public class PlayField {
     private Map<Point, StaticObject> gameObjects;
     private Human human;
     private Monster monster;
-    TextureStorage textureStorage;
+    private TextureStorage textureStorage;
     public void addHuman(Human human) {
         this.human = human;
     }

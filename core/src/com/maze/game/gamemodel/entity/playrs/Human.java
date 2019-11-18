@@ -21,7 +21,7 @@ public class Human extends GameObject {
     }
     public void makeForceInvisible(){
         this.forceInvisible=true;
-
+        System.err.println("force nvis");
     }
 
     public boolean moveTo(int xShift, int yShift) {
