@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.maze.game.gamemodel.TextureStorage;
 
 public abstract class GameObject extends Actor {
-    private final float cellSize = 32f;
+    private final float CELLSIZE = 32f;
     private ShaderProgram darker;
 
     protected int objectId;
@@ -31,10 +31,10 @@ public abstract class GameObject extends Actor {
     public void draw(Batch batch, TextureStorage store) {
         Texture texture = store.getTextureBank(objectId, status);
         Rectangle boundingBox = new Rectangle(
-                position.getX() * cellSize,
-                position.getY() * cellSize,
-                cellSize,
-                cellSize
+                position.getX() * CELLSIZE,
+                position.getY() * CELLSIZE,
+                CELLSIZE,
+                CELLSIZE
         );
 
         //if (status == 0)

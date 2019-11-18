@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class TextureStorage {
     Texture[][] textureBank = new Texture[10][10];
+
     Texture fogOfWar = new Texture("gametexture\\FogOfWar.png");
     Texture wallDark = new Texture("gametexture\\WallLight.png");
     Texture wallLight = new Texture("gametexture\\WallLight.png");
@@ -20,6 +21,7 @@ public class TextureStorage {
     Texture empty = new Texture("gametexture\\Empty.png");
     Texture monster = new Texture("gametexture\\Monster.png");
 
+    Texture moveEnable = new Texture("gametexture\\MoveEnableIcon.png");
     public TextureStorage(int gameType) {
 
 
@@ -74,7 +76,10 @@ public class TextureStorage {
     }
 
 
-
+    public Texture getMoveEnable()
+    {
+        return moveEnable;
+    }
     public Texture getTextureBank(int type, int status) {
         return textureBank[type][status];
     }

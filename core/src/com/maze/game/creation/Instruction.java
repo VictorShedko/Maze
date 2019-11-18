@@ -1,4 +1,4 @@
-package com.maze.game.fabric;
+package com.maze.game.creation;
 
 import com.maze.game.gamemodel.entity.Point;
 

@@ -4,38 +4,41 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import org.w3c.dom.Text;
-
-import java.awt.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
     final MazeGame game;
     TextButton exit;
     TextButton startGame;
     TextButton joinGame;
+    Stage mainStage;
     OrthographicCamera camera;
     Skin skin = new Skin();
     Texture mainMenuScreenImage=new Texture("menuimage\\mainscreen.jpg");
 
     public MainMenuScreen(final MazeGame game) {
 
+
+
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-
+        mainStage=new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(mainStage);
 
         exit = new TextButton("exit", game.textButtonStyle);
         exit.setSize(200, 100);
+
+
+
         exit.setPosition(100, 0);
-        game.stage.addActor(exit);
+        mainStage.addActor(exit);
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -47,12 +50,15 @@ public class MainMenuScreen implements Screen {
         startGame = new TextButton("start game", game.textButtonStyle);
         startGame.setSize(200, 100);
         startGame.setPosition(100, 200);
-        game.stage.addActor(startGame);
+        mainStage.addActor(startGame);
         startGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.ourSideSocket.startGame();
-
+                if(game.isConnected()) {
+                    game.ourSideSocket.sendStartGameMessage();
+                }else {
+                    game.connect();
+                }
             }
         });
 
@@ -60,19 +66,24 @@ public class MainMenuScreen implements Screen {
         joinGame = new TextButton("join game", game.textButtonStyle);
         joinGame.setSize(200, 100);
         joinGame.setPosition(100, 400);
-        game.stage.addActor(joinGame);
+        mainStage.addActor(joinGame);
         joinGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.ourSideSocket.joinGame();
-
+                if(game.isConnected()) {
+                game.ourSideSocket.sendJoinGameMessage();
+                }else {
+                    game.connect();
+                }
             }
         });
+
     }
 
     @Override
     public void show() {
 
+        Gdx.input.setInputProcessor(mainStage);
     }
 
     @Override
@@ -83,8 +94,11 @@ public class MainMenuScreen implements Screen {
 
         camera.update();
         game.batch.begin();
-        game.stage.draw();
-        game.batch.draw(mainMenuScreenImage,0,0);
+        mainStage.getBatch().begin();
+        mainStage.getBatch().draw(mainMenuScreenImage,0,0,640,480);
+        mainStage.getBatch().end();
+        mainStage.draw();
+
         game.batch.end();
 
 

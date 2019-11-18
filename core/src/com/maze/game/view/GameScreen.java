@@ -13,7 +13,7 @@ public class GameScreen implements Screen {
     MainController mainController;
     OrthographicCamera cam;
     SocketControl socketControl;
-    int playSide=1;
+    int playSide;
     boolean isGameActive=false;
     @Override
     public void show() {
@@ -30,21 +30,24 @@ public class GameScreen implements Screen {
         if(isGameActive){
             cam.position.set(mainController.getCamX(), mainController.getCamY(), 0);
             if(mainController.isGameEnd()){
-                game.setScreen(new EndGameScreen(game));
+                game.setScreen(game.endGameScreen);
+                System.out.println("Game Over");
             }
         }
-        mainController.setGameEnd(true);
+
+
         cam.update();
         game.batch.setProjectionMatrix(cam.combined);
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        game.batch.begin();
-        if(!mainController.isGameEnd()){
-            mainController.playFieldDraw(game.batch);
+        if(mainController!=null) {
+            game.batch.begin();
+            if (!mainController.isGameEnd()) {
+                mainController.draw(game.batch);
+            }
+            game.batch.end();
         }
-        game.batch.end();
 
     }
 
@@ -79,21 +82,26 @@ public class GameScreen implements Screen {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.LEFT)) {
 
-                game.ourSideSocket.moveRequest(-1, 0, playSide);
+                game.ourSideSocket.sendMoveRequestMessage(-1, 0, playSide);
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
-                game.ourSideSocket.moveRequest(1, 0, playSide);
+                game.ourSideSocket.sendMoveRequestMessage(1, 0, playSide);
 
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.DOWN)) {
 
-                game.ourSideSocket.moveRequest(0, -1, playSide);
+                game.ourSideSocket.sendMoveRequestMessage(0, -1, playSide);
 
             }
             if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
-                game.ourSideSocket.moveRequest(0, 1, playSide);
+                game.ourSideSocket.sendMoveRequestMessage(0, 1, playSide);
+
+
+            }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+               mainController.skipTurn();
 
 
             }

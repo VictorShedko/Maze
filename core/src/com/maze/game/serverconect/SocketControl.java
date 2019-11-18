@@ -5,70 +5,73 @@ import com.maze.game.view.MazeGame;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
+
 
 public class SocketControl {
-    int id;
-    private  Socket clientSocket;
-    private  BufferedReader in;
-    private  BufferedWriter out;
+    private Socket clientSocket;
+    private BufferedReader in;
+    private BufferedWriter out;
     private ClientSocketListener listener;
     private ClientSocketWriter writer;
     private boolean choiceMaid = false;
-
-    public ClientSocketListener getListener() {
-        return listener;
-    }
-
-    public ClientSocketWriter getWriter() {
-        return writer;
-    }
-    public void changeTurnRequest(int turn){
-        writer.sendMessage(new Message(1, turn, 0, 0,3));
-    }
-    public void moveRequest(int xShift,int yShift,int side){
-        writer.sendMessage(new Message(2,xShift,yShift,side,3));
+    public boolean isConected() {
+        return clientSocket.isBound();
 
     }
 
-    public void joinGame(){
-        if(choiceMaid==false) {
+    public void sendChangeTurnRequestMessage(int turn) {
+        writer.sendMessage(new Message(1, turn, 0, 0, 3));
+    }
+
+    public void sendMoveRequestMessage(int xShift, int yShift, int side) {
+        writer.sendMessage(new Message(2, xShift, yShift, side, 3));
+
+    }
+    public void sendEndGameMessage(int winner){
+        writer.sendMessage(new Message(4, winner, 0, 0,0));
+    }
+    public void refresh() {
+        choiceMaid = false;
+    }
+
+    public void sendJoinGameMessage() {
+        if (choiceMaid == false) {
             writer.sendMessage(new Message(7, 0, 0, 0, 3));
-            choiceMaid=true;
+            choiceMaid = true;
         }
 
 
     }
 
-    public void startGame(){
-        if(choiceMaid==false) {
-        writer.sendMessage(new Message(8,0,0,0,3));
-            choiceMaid=true;
+    public void sendStartGameMessage() {
+        if (choiceMaid == false) {
+            writer.sendMessage(new Message(8, 0, 0, 0, 3));
+            choiceMaid = true;
         }
 
     }
 
-    public void replayRequest(){
-        writer.sendMessage(new Message(9,0,0,0,3));
+    public void sendReplayRequestMessage() {
+        writer.sendMessage(new Message(9, 0, 0, 0, 3));
     }
 
-    public void replayReject(){
-        writer.sendMessage(new Message(10,0,0,0,3));
+    public void sendReplayRejectMessage() {
+        writer.sendMessage(new Message(10, 0, 0, 0, 3));
     }
+
     public SocketControl(MazeGame game) {
-        int port=8080;
+        int port = 8080;
 
 
         try {
-            clientSocket = new Socket("localhost",port);
+            clientSocket = new Socket("localhost", port);
 
 
-
-        in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
-        this.listener=new ClientSocketListener(game,this,in);
-        this.writer=new ClientSocketWriter(game,clientSocket,out);
-        int a=0;
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            this.listener = new ClientSocketListener(game, this, in);
+            this.writer = new ClientSocketWriter(game, clientSocket, out);
+            int a = 0;
         } catch (IOException e) {
             e.printStackTrace();
         }

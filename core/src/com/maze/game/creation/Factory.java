@@ -1,11 +1,10 @@
-package com.maze.game.fabric;
+package com.maze.game.creation;
 
 import com.maze.game.gamemodel.controlers.EventSystem;
 import com.maze.game.gamemodel.controlers.MainController;
 import com.maze.game.gamemodel.entity.MazeEvent;
 import com.maze.game.gamemodel.PlayField;
 import com.maze.game.gamemodel.entity.*;
-import com.maze.game.gamemodel.entity.events.MazeEventEffeact;
 import com.maze.game.gamemodel.entity.events.PlayerStateEventEffeact;
 import com.maze.game.gamemodel.entity.events.SystemStateEventEffeact;
 import com.maze.game.gamemodel.entity.playrs.Human;
@@ -20,7 +19,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class Fabric {
+public class Factory {
     EventSystem eventSystem;
     PlayField playField;
     File file;
@@ -119,7 +118,7 @@ public class Fabric {
                         MazeEvent condition = new MazeEvent(0, i.eventPos, humanInEqualPosition);
                         temp = new UsableObject(6, i.p, startVisibleUsable, false, false, condition, i.angle);
                         playField.addObjectToField((StaticObject) temp);
-                        Consumer<Human> effect = t -> t.makeInvisible();
+                        Consumer<Human> effect = t -> t.makeForceInvisible();
                         PlayerStateEventEffeact stateEffeact=new PlayerStateEventEffeact(playField.getHuman(),effect);
                         eventSystem.registrate(condition, stateEffeact);
                     }
@@ -141,7 +140,7 @@ public class Fabric {
 
     }
 
-    public Fabric(EventSystem eventSystem, PlayField playField,MainController mainController) {
+    public Factory(EventSystem eventSystem, PlayField playField, MainController mainController) {
         this.eventSystem = eventSystem;
         this.playField = playField;
         this.mainController=mainController;

@@ -23,7 +23,6 @@ public class MazeGame extends Game {
 	MainMenuScreen mainMenuScreen;
 	GameScreen gameScreen;
 	EndGameScreen endGameScreen;
-	Stage stage;
 	SpriteBatch batch;
 	TextButton.TextButtonStyle textButtonStyle;
 	BitmapFont font;
@@ -33,22 +32,28 @@ public class MazeGame extends Game {
 
 
 	SocketControl ourSideSocket;
-
+	 void connect(){
+		if(ourSideSocket==null) {
+			ourSideSocket = new SocketControl(this);
+		}
+	}
+	public boolean isConnected(){
+	 	if(ourSideSocket==null)return false;
+	 	return ourSideSocket.isConected();
+	}
 	@Override
 	public void create () {
 
 
-		ourSideSocket=new SocketControl(this);
+
 		batch = new SpriteBatch();
-		stage=new Stage(new ScreenViewport());
-		Gdx.input.setInputProcessor(stage);
 		font = new BitmapFont();
 		skin = new Skin();
 
 		textButtonStyle = new TextButton.TextButtonStyle();
 		textButtonStyle.font = font;
 
-
+		endGameScreen=new EndGameScreen(this);
 		mainMenuScreen=new MainMenuScreen(this);
 		this.setScreen(mainMenuScreen);
 
