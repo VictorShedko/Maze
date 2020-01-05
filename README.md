@@ -3,7 +3,7 @@
 Язык: Java.
 Используется библиотека libGDX
 # Ссылки
-1. [Documentation](/tree/master/Documents/Requirements) <br>
+1. Documentation <br>
   1.1 [Reqirements (ru)](https://github.com/VictorShedko/Maze/blob/master/Requirements/Reqests.md) <br>
   1.2 [UML Diagrams (ru)](https://github.com/VictorShedko/Maze/tree/master/Diagram) <br>
   1.3 [Правила игры](https://github.com/VictorShedko/Maze/blob/master/Game%20rules/rules.md)<br>
